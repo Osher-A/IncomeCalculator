@@ -1,0 +1,104 @@
+﻿@page "/wages"
+@using IncomeCalculator.Model
+@using static Model.Period
+
+<style>
+	
+	h1 ,h2{
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		color: #193441;
+	}
+	label, text{
+		color : #193441;
+	}
+	.minWage{
+		display: none;
+	}
+</style>
+
+
+<h1 class="mb-9  text-center header" >Wages Calculator</h1>
+
+<EditForm Model="@WdModel" class="p-3 ml-1 mr-5" style=" margin-top: 4%; margin-bottom:4%;">
+<DataAnnotationsValidator/>
+	
+ <div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="minWage" class="form-label text-right">Min Wage</label>
+		</div>
+		<div class="col-3">
+			<InputCheckbox  name="minWage" class="form-check-input ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage"></InputCheckbox>
+		</div>
+    </div>
+
+	 <div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="hours" class="form-label">Hours per week</label>
+		</div>
+		<div class="col-3">
+			<InputNumber id="hours" @bind-Value="WdModel.HoursPW" class="form-control"/>
+		</div>
+</div>
+
+	<div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="rate" class="form-label">Hourly rate</label>
+		</div>
+		<div class="col-3 ">
+			<InputNumber id="rate" placeHolder="£0.00" class="form-control w-60" @bind-Value="@WdModel.HourlyRate"/>
+		</div>
+   </div>
+
+
+<div class="row mb-4" style="display: @Display">
+		<div class="col-5 text-right">
+			<label for="year" class="form-label">Tax Year</label>
+		</div>
+		<div class="col-3">
+			<InputSelect  @bind-Value="WdModel.MinWage.TaxYear"  class="form-control w-60">
+				<option value ="@(new DateTime(2020, 04, 06))">2020-2021</option>
+				@foreach(var year in TaxYears)
+				{
+					<option value="@year.DbTaxYear">@year.UiTaxYear</option>
+				}
+			</InputSelect>
+		</div>
+	</div>
+
+   
+   <div class="row mb-4 " style="display: @Display">
+		<div class="col-5 text-right">
+			<label for="age" class="form-label">Age</label>
+		</div>
+		<div class=col-3>
+			<InputNumber id="age" @bind-Value="WdModel.Age" class="form-control w-60" />
+			<ValidationMessage For="@(() => WdModel.Age)"/>
+		</div>
+	</div>
+
+	
+
+    <div class="row mb-5 m">
+		<div class="col-5 text-right">
+			<label class="form-label">Period to calculate</label>
+		</div>
+		<div class="col-6">
+			<InputRadioGroup @bind-Value="WdModel.Period">
+				@foreach (var period in (Period[])Enum.GetValues(typeof(Period)))
+				{
+		<InputRadio Value="period" />
+					<text>&nbsp@(period)&nbsp&nbsp</text>
+				}
+   </InputRadioGroup>
+  </div>
+	</div>
+
+		<div class="row ">
+  <div class="col-12" >
+  <h2 class="text-center">@string.Format("Total per {0}: {1:C}",WdModel.Period.ToString(),WdModel.Total)</h2>
+ </div>
+ </div>
+
+
+</EditForm>
+
