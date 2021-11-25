@@ -1,0 +1,30 @@
+﻿@page "/second-parent/{Children}"
+
+@inject WorkDetails Parent1WD;
+@inject FinancialDetails Fd;
+
+<ParentWorkDetails Parent="Second Parent" WorkDetails=@Parent2WD PullUpDetails=SetDetails/>
+<NextPageButton Url="result"  Text="Submit"  />  
+	
+
+
+@code {
+	[Parameter]
+	public string Children { get; set; }
+	
+	public WorkDetails Parent2WD { get; set; }
+
+	protected override void OnInitialized()
+	{
+		Parent2WD = new WorkDetails() { IsTaxCalculator = true, Period = Period.Year };
+	}
+
+	private void SetDetails(WorkDetails parent2WorkDetails)
+	{
+			Fd.Parent1WorkDetails = Parent1WD;
+			Fd.Parent2WorkDetails = parent2WorkDetails;
+			Fd.ChildrenAmount = Convert.ToInt32(Children);
+			Fd.TaxYear = Parent1WD.MinWage.TaxYear;
+	}
+
+}

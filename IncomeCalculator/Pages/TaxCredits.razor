@@ -1,0 +1,102 @@
+﻿@page "/tax-credits"
+
+@*<Styled @bind-Classname="@CanvasStyle">
+	height: 100%;
+	width:100%;
+	background-color: white;
+	position: absolute;
+</Styled>*@
+
+<PageTitle>Tax Credits Calculator</PageTitle>
+
+<div class="@CanvasStyle">
+<h1 class="mb-9 mt-0  text-center header" >Tax Credit's Calculator</h1>
+
+<EditForm Model="@FinancialDetails" class="p-3">
+<DataAnnotationsValidator/>
+
+<div class="row">
+	<div class="col-5 text-right">
+		<label for="children" class="form-col-form-label ">Children</label>
+	</div>
+	<div class="col-6">
+		<InputNumber  id="children" @bind-Value="FinancialDetails.ChildrenAmount" class="form-control border-dark"/>
+	</div>
+</div>
+
+<div class="row mt-4">
+	<div class="col-12 ">
+		<ErrorBoundary>
+		<TaxYearBox  TaxYear="@FinancialDetails.TaxYear" OnDateChange=ChangeDate />
+		</ErrorBoundary>
+	</div>
+</div>
+
+<div class="row mb-1 ">
+	<div class="col-6">
+	 <h2 class="text-center header" style="font-size: 35px;">Parent 1</h2>
+ </div>
+ <div class="col-6">
+	 <h2 class="text-center header" style="font-size: 35px;">Parent 2</h2>
+ </div>
+</div>
+
+<div class="row mb-4">
+	<div class="col-6">
+	 <WorkInfo WdModel="@FinancialDetails.Parent1WorkDetails"></WorkInfo>
+ </div>
+
+ <div class="col-6">
+	 <WorkInfo WdModel="@FinancialDetails.Parent2WorkDetails"></WorkInfo>
+ </div>
+</div>
+<button class="btn btn-primary" @onclick="Calculate">Submit</button>
+
+<div class="row">
+	<div class="col-12 text-center">
+		<h2 style="display: @Display">Total: @Total.ToString("C")</h2>
+	</div>
+</div>
+
+</EditForm>
+</div>
+
+@code{
+	public FinancialDetails FinancialDetails { get; set; }
+	public decimal Total { get; set; }
+	private string CanvasStyle;
+	public string Display 
+	{
+		get
+		{
+			if(Total > 0)
+			   return "normal";
+	        else
+				return "none";
+		}
+	}
+
+	protected override void OnInitialized()
+	{
+		FinancialDetails = new FinancialDetails()
+			{
+				Parent1WorkDetails = new WorkDetails { IsTaxCalculator = true , Period = Period.Year},
+				Parent2WorkDetails = new WorkDetails { IsTaxCalculator = true , Period = Period.Year },
+				TaxYear = new DateTime()
+			};
+	}
+
+	private void Calculate()
+	{
+		var taxCreditService = new TaxCreditsService(FinancialDetails);
+		Total = taxCreditService.GetTaxCreditsTotal();
+	}
+
+	private void ChangeDate(DateTime date)
+	{
+		FinancialDetails.TaxYear = date;
+		FinancialDetails.Parent1WorkDetails.MinWage.TaxYear = date;
+		FinancialDetails.Parent2WorkDetails.MinWage.TaxYear = date;
+		StateHasChanged();
+	}
+}

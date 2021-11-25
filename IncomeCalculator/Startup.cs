@@ -1,20 +1,14 @@
+using BlazorStyled;
 using IncomeCalculator.Data;
+using IncomeCalculator.Models;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Radzen;
-using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
-using IncomeCalculator.DAL;
-using IncomeCalculator.Services;
 
 namespace IncomeCalculator
 {
@@ -34,15 +28,18 @@ namespace IncomeCalculator
             services.AddRazorPages();
             services.AddSyncfusionBlazor();
             services.AddServerSideBlazor();
+            services.AddBlazorStyled();
 
-             services.AddScoped<DialogService>();
+            services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
 
             services.AddDbContext<BenefitsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            
+            services.AddSingleton<WorkDetails>();
+            services.AddSingleton<FinancialDetails>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

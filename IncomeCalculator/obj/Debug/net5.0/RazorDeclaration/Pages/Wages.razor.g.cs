@@ -104,15 +104,22 @@ using Syncfusion.Blazor.Notifications;
 #line hidden
 #nullable disable
 #nullable restore
+#line 14 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\_Imports.razor"
+using IncomeCalculator.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\Pages\Wages.razor"
-using IncomeCalculator.Model;
+using static IncomeCalculator.Models.Period;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\Pages\Wages.razor"
-using static Model.Period;
+using IncomeCalculator.Pages;
 
 #line default
 #line hidden
@@ -125,6 +132,30 @@ using static Model.Period;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 50 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\Pages\Wages.razor"
+      
+	public WorkDetails WdModel { get; private set; }
+
+	protected override void OnInitialized()
+	{
+		WdModel = new WorkDetails();
+	}
+		
+        public string TotalDisplay
+        {
+            get
+            {
+                if (WdModel.Total > 0)
+                    return "normal";
+                else
+                    return "none";
+            }
+        }
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

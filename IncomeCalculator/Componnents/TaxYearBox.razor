@@ -1,0 +1,45 @@
+﻿<div class="row mb-4" style="display: @Display" >
+		<div class="col-5 text-right">
+			<label for="year" class="form-label">Tax Year</label>
+		</div>
+		<div class="col-3">
+			<InputSelect id="year" class="form-control border-3 border-dark"  @bind-Value="TaxYear" @onmouseleave="ChangeParentDate">
+				<option value ="@(new DateTime(2020, 04, 06))">2020-2021</option>
+				@foreach(var year in TaxYears)
+				{
+					<option value="@year.DbTaxYear">@year.UiTaxYear</option>
+				}
+			</InputSelect>
+		</div>
+	</div>
+
+@code {
+	[Parameter]
+	public string Display { get; set; }
+
+	[Parameter]
+	public DateTime TaxYear { get; set; }
+	public List<TaxYear> TaxYears { get; set; }
+	[Parameter]
+	public Action<DateTime> OnDateChange { get; set; }
+
+	protected override void OnInitialized()
+	{
+		TaxYears = GetTaxYears();
+		TaxYear = new DateTime(2020, 04, 06);
+	}
+
+	private List<TaxYear> GetTaxYears()
+	{
+		return new List<TaxYear>()
+                {
+                   new TaxYear{UiTaxYear= "2021-2022", DbTaxYear = new DateTime(2021,04,06)},
+                   new TaxYear{UiTaxYear= "2022-2023", DbTaxYear = new DateTime(2022,04,06)},
+                };
+	}
+
+	private void ChangeParentDate(EventArgs e)
+	{
+		OnDateChange?.Invoke(TaxYear);
+	}
+}

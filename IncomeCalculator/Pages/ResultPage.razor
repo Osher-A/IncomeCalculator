@@ -1,0 +1,84 @@
+﻿@page "/result"
+@inject FinancialDetails Fd;
+
+<style>
+    input{
+        height: 2.5em;
+        padding: 1em;
+        width: 12em;
+        border: 2em;
+    }
+</style>
+<h1 class="header text-center">Input Results</h1>
+
+<EditForm Model=@Fd>
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>Tax year</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly="readonly" Value="@String.Format("April {0}", Fd.TaxYear.Year.ToString())" />
+    </div>
+</div>
+
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>No. of Children</label>
+    </div>
+    <div class="col-6 ">
+        <input type="number" class="rounded" readonly Value="@Fd.ChildrenAmount"/>
+    </div>
+</div>
+
+<div class="row  p-3 ">
+    <div class="col-6 text-right">
+        <label>Parent 1 weekly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly Value="@String.Format("{0:C}" ,Parent1WeeklyIncome)"/>
+    </div>
+</div>
+
+<div class="row  p-3">
+    <div class="col-6 text-right">
+        <label>Parent 2 weekly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly Value="@String.Format("{0:C}", Parent2WeeklyIncome)"/>
+    </div>
+</div>
+
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>Total yearly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly value="@String.Format("{0:C}", Fd.CombindedIncome)" />
+    </div>
+</div>
+
+<div class="row mt-3 p-3">
+    <div class="col-6 text-right">
+        <label style="font-size: 2em; line-height:normal;" class="header" >Total yearly credits:</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="@String.Format("{0:C}", Total)"/>
+    </div>
+</div>
+</EditForm>
+
+
+@code {
+    public decimal? Total { get; set; }
+    public decimal? Parent1WeeklyIncome { get; private set; }
+    public decimal? Parent2WeeklyIncome { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        Parent1WeeklyIncome = (Fd.Parent1WorkDetails.Total > 0)? Fd.Parent1WorkDetails.Total / 52: null;
+        Parent2WeeklyIncome = (Fd.Parent2WorkDetails.Total > 0)? Fd.Parent2WorkDetails.Total / 52: null;
+        var taxCreditService = new TaxCreditsService(Fd);
+		Total = taxCreditService.GetTaxCreditsTotal();
+	}
+
+}

@@ -3,15 +3,14 @@ using IncomeCalculator.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace IncomeCalculator.Services
 {
     public class MinWageService
     {
-        private MinWageRepository _minWageRepository;
+        private MinWagePersistence _minWageRepository;
         public List<MinWage> MinWages { get; set; }
-        public  MinWageService(MinWageRepository minWageRepository)
+        public MinWageService(MinWagePersistence minWageRepository)
         {
             _minWageRepository = minWageRepository;
             SetMinWages();

@@ -1,0 +1,88 @@
+﻿<div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="minWage" class="form-label text-right">Min Wage</label>
+		</div>
+		<div class="col-3" >
+			<InputCheckbox  name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage"></InputCheckbox>
+		</div>
+	</div>
+
+	 <div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="hours" class="form-label">Hours per week</label>
+		</div>
+		<div class="col-3" >
+			<InputNumber id="hours" @bind-Value="WdModel.HoursPW" class="form-control border-dark" @onfocusout=UpdateParentDetails/>
+		</div>
+</div>
+
+	<div class="row mb-4">
+		<div class="col-5 text-right">
+			<label for="rate" class="form-label">Hourly rate</label>
+		</div>
+		<div class="col-3">
+			<InputNumber id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-Value="@WdModel.HourlyRate" @onfocusout=UpdateParentDetails/>
+		</div>
+   </div>
+
+   <TaxYearBox TaxYear="@WdModel.MinWage.TaxYear" Display="@DisplayTaxYearBox" OnDateChange=ChangeParentDate/>
+
+   
+   <div class="row mb-4 " style="display: @Display">
+		<div class="col-5 text-right">
+			<label for="age" class="form-label">Age</label>
+		</div>
+		<div class="col-3">
+			<InputNumber id="age" @bind-Value="WdModel.Age" class="form-control border-dark " />
+			<ValidationMessage For="@(() => WdModel.Age)"/>
+		</div>
+	</div>
+
+	
+	@code{
+	[Parameter]
+	public WorkDetails WdModel { get; set; }
+	public string Display
+	{
+		get
+		{
+			if (WdModel.IsMinWage)
+				return "normal";
+			else
+				return "none";
+		}
+	}
+
+	public string DisplayTaxYearBox
+	{
+		get
+		{
+			if (WdModel.IsTaxCalculator || !WdModel.IsMinWage)
+				return "none";
+			else
+				return "normal";
+		}
+	}
+
+	protected override void OnInitialized()
+	{
+		WdModel.MinWage.TaxYear = new DateTime(2020, 04, 06);
+	}
+
+	[Parameter]
+	public Action<DateTime> OnDateChange { get; set; }
+	[Parameter]
+	public Action<WorkDetails> OnDetailsChange { get; set; }
+
+	private void ChangeParentDate(DateTime date)
+	{
+		OnDateChange?.Invoke(date);
+	}
+
+	private void UpdateParentDetails(FocusEventArgs e)
+	{
+		OnDetailsChange?.Invoke(WdModel);
+	}
+	
+}
+

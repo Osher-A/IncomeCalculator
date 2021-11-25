@@ -90,3 +90,9 @@ C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\In
 C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\ref\IncomeCalculator.dll
 C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\IncomeCalculator.pdb
 C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\IncomeCalculator.genruntimeconfig.cache
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\RazorDeclaration\Pages\TaxCredits.razor.g.cs
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\Razor\Pages\TaxCredits.razor.g.cs
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\RazorDeclaration\Pages\WorkInfo.razor.g.cs
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\Razor\Pages\WorkInfo.razor.g.cs
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\RazorDeclaration\Pages\TaxYearBox.razor.g.cs
+C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\obj\Debug\net5.0\Razor\Pages\TaxYearBox.razor.g.cs

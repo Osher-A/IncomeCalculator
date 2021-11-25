@@ -1,4 +1,7 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Excubo.Blazor.TreeViews
+
+
+<div class="top-row color4 navbar navbar-dark">
     <a class="navbar-brand" href="">Income Calculator</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -6,32 +9,58 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+       <nav class="flex-column">
+        <div class="nav-item px-3" > 
+           <NavLink class="nav-link" href="" >
+                <span class="oi oi-home" aria-hidden="true" ></span> Home
             </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="wages">
-                <span class="oi oi-calculator" aria-hidden="true"></span> Calculator
+        </div>
+        <div class="nav-item px-3"  >
+            <NavLink  class="nav-link" href="wages">
+                <span class="oi oi-calculator" aria-hidden="true"></span> Wages Calculator
             </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+        </div>
+        <div class="nav-item px-3" >
+             <NavLink  class="nav-link"  @onclick=ToggleTreeView>
+                <span class="@_oiImage" aria-hidden="true"></span> Tax Credit Calculater
             </NavLink>
-        </li>
-    </ul>
+            <div class="ml-3" style="display: @_display;" >
+            <NavLink  class="nav-link tree-view" href="family-details">
+                <span class="oi oi-people "></span>Family Details
+            </NavLink>
+            <NavLink  class="nav-link tree-view" href="first-parent">
+                <span class="oi oi-person"></span>First Parent
+            </NavLink>
+            <NavLink  class="nav-link tree-view" href="second-parent">
+                <span class="oi oi-person"></span>Second Parent 
+            </NavLink>
+            <NavLink  class="nav-link tree-view" href="second-parent">
+                <span class="oi oi-british-pound"></span>Results
+            </NavLink>
+            </div>
+        </div>
+       </nav>
 </div>
+
+
+
+
 
 @code {
     private bool collapseNavMenu = true;
+    private string _display { get; set; } = "none";
+    private string _oiImage { get; set; } = "oi oi-expand-down";
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleTreeView(MouseEventArgs e)
+    {
+        _display = (_display == "none")? "normal": "none";
+        _oiImage = (_oiImage == "oi oi-expand-down") ? "oi oi-expand-up" : "oi oi-expand-down";
     }
 }

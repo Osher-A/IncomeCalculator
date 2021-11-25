@@ -1,0 +1,19 @@
+﻿<div class="col offset-9 mt-5">
+	<button >
+	<NavLink class="nav-link " href="@Url" @onclick=Update >@Text &nbsp;  <span class="oi oi-arrow-thick-right" ></span></NavLink> 
+	</button>
+</div>
+
+@code{
+	[Parameter]
+	public string Text { get; set; } = "Next";
+	[Parameter]
+	public string Url { get; set; }
+	[Parameter]
+	public Action Action { get; set; } 
+
+	private void Update()
+	{
+		Action?.Invoke();
+	}
+}

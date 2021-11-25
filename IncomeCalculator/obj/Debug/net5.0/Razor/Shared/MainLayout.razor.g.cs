@@ -100,6 +100,13 @@ using Syncfusion.Blazor.Notifications;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 14 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\_Imports.razor"
+using IncomeCalculator.Models;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -115,15 +122,13 @@ using Syncfusion.Blazor.Notifications;
             __builder.AddAttribute(5, "class", "main");
             __builder.OpenElement(6, "div");
             __builder.AddAttribute(7, "class", "content px-4");
-            __builder.AddContent(8, 
 #nullable restore
 #line 9 "C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\Shared\MainLayout.razor"
-         Body
+__builder.AddContent(8, Body);
 
 #line default
 #line hidden
 #nullable disable
-            );
             __builder.CloseElement();
             __builder.CloseElement();
         }

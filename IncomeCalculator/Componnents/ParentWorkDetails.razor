@@ -1,0 +1,24 @@
+﻿<h2 class="text-center header" style="font-size: 35px;">Work Details of @Parent</h2>
+<EditForm Model="@WorkDetails" class="p-3">
+	 <WorkInfo WdModel="@WorkDetails" OnDetailsChange=UpdateDetails ></WorkInfo>
+</EditForm>
+
+@code {
+	[Parameter]
+	public string Parent { get; set; }
+	[Parameter]
+	public WorkDetails WorkDetails { get; set; }
+	[Parameter]
+	public Action<WorkDetails> PullUpDetails { get; set; }
+
+	protected override void OnInitialized()
+	{
+		WorkDetails = new WorkDetails { IsTaxCalculator = true, Period = Period.Year };
+	}
+
+	private void UpdateDetails(WorkDetails workDetails)
+	{
+		PullUpDetails?.Invoke(workDetails);
+	}
+}
+

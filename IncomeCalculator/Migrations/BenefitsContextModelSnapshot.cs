@@ -20,6 +20,33 @@ namespace IncomeCalculator.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("IncomeCalculator.Data.ChildTaxCredit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ChildElement")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("FamilyElement")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TaxYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Threshold")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<float>("WithdrawalRate")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChildTaxCredits");
+                });
+
             modelBuilder.Entity("IncomeCalculator.Data.MinWage", b =>
                 {
                     b.Property<int>("Id")
@@ -39,6 +66,36 @@ namespace IncomeCalculator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MinWages");
+                });
+
+            modelBuilder.Entity("IncomeCalculator.Data.WorkingTaxCredit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("BasicElement")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SecondAdult")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TaxYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("ThirtyHourElement")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Threshold")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<float>("WithdrawalRate")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkingTaxCredits");
                 });
 #pragma warning restore 612, 618
         }

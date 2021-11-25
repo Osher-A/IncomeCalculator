@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -18,6 +16,8 @@ namespace IncomeCalculator.Data
         }
 
         public virtual DbSet<MinWage> MinWages { get; set; }
+        public virtual DbSet<ChildTaxCredit> ChildTaxCredits { get; set; }
+        public virtual DbSet<WorkingTaxCredit> WorkingTaxCredits { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,6 +34,16 @@ namespace IncomeCalculator.Data
             modelBuilder.Entity<MinWage>(entity =>
             {
                 entity.Property(e => e.TaxYear).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<ChildTaxCredit>(entity =>
+            {
+                entity.Property(ctc => ctc.TaxYear).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<WorkingTaxCredit>(entity =>
+            {
+                entity.Property(wtc => wtc.TaxYear).HasColumnType("date");
             });
 
             OnModelCreatingPartial(modelBuilder);

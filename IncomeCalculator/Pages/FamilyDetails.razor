@@ -1,0 +1,53 @@
+﻿@page "/family-details"
+
+
+<PageTitle>Tax Credits Calculator</PageTitle>
+
+<h1 class="mb-9 mt-4  text-center header" >Tax Credit's Calculator</h1>
+
+<EditForm Model="@this" class="p-3">
+<DataAnnotationsValidator/>
+
+<div class="row mt-5">
+	<div class="col-5 text-right">
+		<label for="children" class="form-col-form-label ">No. of children</label>
+	</div>
+	<div class="col-6">
+		<InputNumber  id="children" @bind-Value="ChildrenAmount" class="form-control border-dark"/>
+	</div>
+</div>
+
+<div class=row>
+	<div class="col-6 offset-5 text-left">
+     <text style="font-size: 11px;" > * Only children born before 06/04/2017</text>
+	</div>
+</div>
+
+<div class="row mt-4">
+	<div class="col-12 ">
+		<TaxYearBox  TaxYear="@TaxYear"  OnDateChange=ChangeDate />
+	</div>
+</div>
+
+<NextPageButton Url="@SetUrl()"/>
+</EditForm>
+
+@code {
+
+	public DateTime TaxYear { get; set; }
+	public int ChildrenAmount {  get;  set; }
+
+
+	private void ChangeDate(DateTime date)
+	{
+		TaxYear = date;
+		StateHasChanged();
+	}
+
+	private string SetUrl()
+	{
+		return "first-parent/" + ChildrenAmount + "/"  + TaxYear.ToLongDateString();
+	}
+
+	
+}

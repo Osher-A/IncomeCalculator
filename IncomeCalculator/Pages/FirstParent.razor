@@ -1,0 +1,35 @@
+﻿@page "/first-parent/{Children}/{TaxYear}"
+
+@inject WorkDetails Parent1WD;
+<ParentWorkDetails Parent="first Parent" WorkDetails=@Parent1WD PullUpDetails=UpDateWorkDetails/>
+<NextPageButton Url="@GetUrl()"/>
+
+@code {
+	[Parameter]
+	public string Children {get;  set; }
+	[Parameter]
+	public string TaxYear { get; set; }
+
+	//protected override void OnInitialized()
+	//{
+	//	Parent1WD.IsTaxCalculator = true;
+	//	Parent1WD.Period = Period.Year;
+	//	Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
+	//}
+
+	private string GetUrl()
+	{
+		return "second-parent/" + Children;
+	}
+
+	private void UpDateWorkDetails(WorkDetails workDetails)
+	{
+		Parent1WD.Age = workDetails.Age;
+		Parent1WD.HoursPW = workDetails.HoursPW;
+		Parent1WD.HourlyRate = workDetails.HourlyRate;
+		Parent1WD.IsMinWage = workDetails.IsMinWage;
+		Parent1WD.IsTaxCalculator = true;
+		Parent1WD.Period = Period.Year;
+		Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
+	}
+}
