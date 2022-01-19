@@ -1,5 +1,0 @@
-﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="_content/BootstrapBlazor" Path="C:\Users\user\.nuget\packages\bootstrapblazor\5.14.8\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Radzen.Blazor" Path="C:\Users\user\.nuget\packages\radzen.blazor\3.11.4\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Syncfusion.Blazor" Path="C:\Users\user\.nuget\packages\syncfusion.blazor\19.3.0.45\build\..\staticwebassets\" />
-</StaticWebAssets>
