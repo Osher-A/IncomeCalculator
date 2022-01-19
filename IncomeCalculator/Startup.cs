@@ -40,6 +40,8 @@ namespace IncomeCalculator
             services.AddSingleton<WorkDetails>();
             services.AddSingleton<FinancialDetails>();
 
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

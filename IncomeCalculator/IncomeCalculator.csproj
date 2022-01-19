@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>e52b1c88-48d0-4807-8f38-89e83cf11581</UserSecretsId>
 	<!--<UseRazorSourceGenerator>false</UseRazorSourceGenerator>-->
   </PropertyGroup>
 
@@ -17,11 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+   
     <PackageReference Include="BlazorFlex" Version="0.5.0" />
     <PackageReference Include="BlazorStyled" Version="3.1.0" />
     <PackageReference Include="BootstrapBlazor" Version="6.0.4" />
     <PackageReference Include="Excubo.Blazor.TreeViews" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>

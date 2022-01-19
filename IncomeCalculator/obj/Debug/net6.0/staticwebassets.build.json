@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "oma7j86ijUfzrYpx3lxLKMEYA9kKLiZtMtbS7wZ7jms=",
+  "Hash": "KWoSlxFFM+Cb94mIdP/PraslhE4gPbGqo8/ZXrJxvig=",
   "Source": "IncomeCalculator",
   "BasePath": "_content/IncomeCalculator",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "IncomeCalculator\\wwwroot",
       "Source": "IncomeCalculator",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "Pattern": "**"
     }
@@ -37,7 +37,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\css\\bootstrap.blazor.bundle.min.css",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/bootstrap.blazor.bundle.min.css",
       "AssetKind": "All",
@@ -54,7 +54,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\css\\motronic.min.css",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/motronic.min.css",
       "AssetKind": "All",
@@ -71,7 +71,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\js\\bootstrap.blazor.bundle.min.js",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "js/bootstrap.blazor.bundle.min.js",
       "AssetKind": "All",
@@ -88,7 +88,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\lib\\summernote\\font\\summernote.eot",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "lib/summernote/font/summernote.eot",
       "AssetKind": "All",
@@ -105,7 +105,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\lib\\summernote\\font\\summernote.ttf",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "lib/summernote/font/summernote.ttf",
       "AssetKind": "All",
@@ -122,7 +122,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\lib\\summernote\\font\\summernote.woff",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "lib/summernote/font/summernote.woff",
       "AssetKind": "All",
@@ -139,7 +139,7 @@
       "Identity": "C:\\Users\\user\\.nuget\\packages\\bootstrapblazor\\6.0.4\\contentFiles\\any\\net6.0\\wwwroot\\lib\\summernote\\font\\summernote.woff2",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "lib/summernote/font/summernote.woff2",
       "AssetKind": "All",
@@ -3026,10 +3026,10 @@
       "OriginalItemSpec": "C:\\Users\\user\\.nuget\\packages\\syncfusion.blazor\\19.3.0.54\\staticwebassets\\styles\\tailwind-dark.css"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -3043,10 +3043,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -3060,10 +3060,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -3077,10 +3077,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -3094,10 +3094,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -3111,10 +3111,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -3128,10 +3128,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -3145,10 +3145,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -3162,10 +3162,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -3179,10 +3179,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -3196,10 +3196,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -3213,10 +3213,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\css\\site.css",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -3230,10 +3230,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\favicon.ico",
       "SourceId": "IncomeCalculator",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Web\\IncomeCalculator\\IncomeCalculator\\wwwroot\\",
       "BasePath": "_content/IncomeCalculator",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",

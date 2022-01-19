@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BootstrapBlazor.Components;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 #nullable disable
 
@@ -23,12 +26,12 @@ namespace IncomeCalculator.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=Benefits; Trusted_Connection=True; MultipleActiveResultSets=true;");
-            }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+                 optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=Benefits; Trusted_Connection=True; MultipleActiveResultSets=true;");
+                //Azure connection string is in secrets.json
+             }
+}
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
             modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             modelBuilder.Entity<MinWage>(entity =>

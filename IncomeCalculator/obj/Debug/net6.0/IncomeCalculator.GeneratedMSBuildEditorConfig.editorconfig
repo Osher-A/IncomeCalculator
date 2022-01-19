@@ -8,77 +8,77 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = IncomeCalculator
 build_property.RootNamespace = IncomeCalculator
-build_property.ProjectDir = C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator\
+build_property.ProjectDir = C:\Users\user\source\repos\Web\IncomeCalculator\IncomeCalculator\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\user\source\repos\IncomeCalculator\IncomeCalculator
+build_property.MSBuildProjectDirectory = C:\Users\user\source\repos\Web\IncomeCalculator\IncomeCalculator
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/App.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Componnents/NextPageButton.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Componnents/NextPageButton.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9ubmVudHNcTmV4dFBhZ2VCdXR0b24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Componnents/ParentWorkDetails.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Componnents/ParentWorkDetails.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9ubmVudHNcUGFyZW50V29ya0RldGFpbHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Componnents/TaxYearBox.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Componnents/TaxYearBox.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9ubmVudHNcVGF4WWVhckJveC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Componnents/WorkInfo.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Componnents/WorkInfo.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9ubmVudHNcV29ya0luZm8ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/FamilyDetails.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/FamilyDetails.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmFtaWx5RGV0YWlscy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/FirstParent.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/FirstParent.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmlyc3RQYXJlbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/Index.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/ResultPage.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/ResultPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzdWx0UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/SecondParent.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/SecondParent.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2Vjb25kUGFyZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/TaxCredits.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/TaxCredits.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGF4Q3JlZGl0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/Wages.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/Wages.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2FnZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Shared/MainLayout.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Shared/NavMenu.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/_Imports.razor]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/Error.cshtml]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/IncomeCalculator/IncomeCalculator/Pages/_Host.cshtml]
+[C:/Users/user/source/repos/Web/IncomeCalculator/IncomeCalculator/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

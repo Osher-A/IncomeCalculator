@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace IncomeCalculator.Migrations
 {
     [DbContext(typeof(BenefitsContext))]
@@ -15,17 +17,19 @@ namespace IncomeCalculator.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:Collation", "Latin1_General_CI_AS")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .UseCollation("Latin1_General_CI_AS")
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("IncomeCalculator.Data.ChildTaxCredit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<decimal>("ChildElement")
                         .HasColumnType("decimal(18,2)");
@@ -34,7 +38,7 @@ namespace IncomeCalculator.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("TaxYear")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("Threshold")
                         .HasColumnType("decimal(18,2)");
@@ -44,15 +48,16 @@ namespace IncomeCalculator.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChildTaxCredits");
+                    b.ToTable("ChildTaxCredits", (string)null);
                 });
 
             modelBuilder.Entity("IncomeCalculator.Data.MinWage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -65,15 +70,16 @@ namespace IncomeCalculator.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MinWages");
+                    b.ToTable("MinWages", (string)null);
                 });
 
             modelBuilder.Entity("IncomeCalculator.Data.WorkingTaxCredit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<decimal>("BasicElement")
                         .HasColumnType("decimal(18,2)");
@@ -82,7 +88,7 @@ namespace IncomeCalculator.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("TaxYear")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("ThirtyHourElement")
                         .HasColumnType("decimal(18,2)");
@@ -95,7 +101,7 @@ namespace IncomeCalculator.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkingTaxCredits");
+                    b.ToTable("WorkingTaxCredits", (string)null);
                 });
 #pragma warning restore 612, 618
         }
