@@ -25,7 +25,7 @@
 		</div>
    </div>
 
-   <TaxYearBox TaxYear="@WdModel.MinWage.TaxYear" Display="@DisplayTaxYearBox" OnDateChange=ChangeParentDate/>
+   <TaxYearBox  Display="@DisplayTaxYearBox" OnDateChange=ChangeParentDate/>
 
    
    <div class="row mb-4 " style="display: @Display">
@@ -40,7 +40,6 @@
 
 	
 	@code{
-	[Parameter]
 	public WorkDetails WdModel { get; set; }
 	public string Display
 	{
@@ -66,6 +65,7 @@
 
 	protected override void OnInitialized()
 	{
+		WdModel = new WorkDetails();
 		WdModel.MinWage.TaxYear = new DateTime(2020, 04, 06);
 	}
 

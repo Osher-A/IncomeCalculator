@@ -1,7 +1,7 @@
 ﻿@page "/first-parent/{Children}/{TaxYear}"
 
 @inject WorkDetails Parent1WD;
-<ParentWorkDetails Parent="first Parent" WorkDetails=@Parent1WD PullUpDetails=UpDateWorkDetails/>
+<ParentWorkDetails Parent="first Parent"  PullUpDetails=UpDateWorkDetails/>
 <NextPageButton Url="@GetUrl()"/>
 
 @code {

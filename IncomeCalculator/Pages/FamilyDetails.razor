@@ -25,7 +25,7 @@
 
 <div class="row mt-4">
 	<div class="col-12 ">
-		<TaxYearBox  TaxYear="@TaxYear"  OnDateChange=ChangeDate />
+		<TaxYearBox   OnDateChange=ChangeDate />
 	</div>
 </div>
 
@@ -41,7 +41,7 @@
 	private void ChangeDate(DateTime date)
 	{
 		TaxYear = date;
-		StateHasChanged();
+		//StateHasChanged();
 	}
 
 	private string SetUrl()

@@ -17,8 +17,6 @@
 	[Parameter]
 	public string Display { get; set; }
 
-	[Parameter]
-	public DateTime TaxYear { get; set; }
 	public List<TaxYear> TaxYears { get; set; }
 	[Parameter]
 	public Action<DateTime> OnDateChange { get; set; }
