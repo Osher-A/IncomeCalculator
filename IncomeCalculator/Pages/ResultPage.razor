@@ -1,12 +1,14 @@
 ﻿@page "/result"
 @inject FinancialDetails Fd;
+@inject IJSRuntime JsRuntime;
+@using Microsoft.JSInterop;
 
 <style>
-    input{
+    input {
         height: 2.5em;
         padding: 1em;
         width: 12em;
-        border: 2em;
+        box-sizing: border-box;
     }
 </style>
 <h1 class="header text-center">Input Results</h1>
@@ -69,16 +71,34 @@
 
 
 @code {
-    public decimal? Total { get; set; }
-    public decimal? Parent1WeeklyIncome { get; private set; }
-    public decimal? Parent2WeeklyIncome { get; private set; }
+    //[CascadingParameter]
+    //public int ChildredAmount {  get;  set; }
 
-    protected override void OnInitialized()
+    public decimal Total { get; set; }
+    public decimal Parent1WeeklyIncome { get; private set; }
+    public decimal Parent2WeeklyIncome { get; private set; }
+
+    protected async override void OnInitialized()
     {
-        Parent1WeeklyIncome = (Fd.Parent1WorkDetails.Total > 0)? Fd.Parent1WorkDetails.Total / 52: null;
-        Parent2WeeklyIncome = (Fd.Parent2WorkDetails.Total > 0)? Fd.Parent2WorkDetails.Total / 52: null;
-        var taxCreditService = new TaxCreditsService(Fd);
-		Total = taxCreditService.GetTaxCreditsTotal();
-	}
+        Parent1WeeklyIncome = (Fd.Parent1WorkDetails.Total > 0)? Fd.Parent1WorkDetails.Total / 52: 0;
+        Parent2WeeklyIncome = (Fd.Parent2WorkDetails.Total > 0)? Fd.Parent2WorkDetails.Total / 52: 0;
+        try
+        {
+            var taxCreditService = new TaxCreditsService(Fd);
+            Total = taxCreditService.GetTaxCreditsTotal();
+            await TostrAlert("success", "Successfull query!");
+
+        }
+        catch (Exception ex)
+        {
+          await  TostrAlert("error", ex.Message);
+        }
+
+    }
+
+    private async Task TostrAlert(string type, string message)
+    {
+        await JsRuntime.InvokeVoidAsync("ShowToastr", type , message);
+    }
 
 }

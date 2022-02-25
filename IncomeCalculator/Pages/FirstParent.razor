@@ -1,21 +1,25 @@
 ﻿@page "/first-parent/{Children}/{TaxYear}"
+@page "/firt-parent"
 
 @inject WorkDetails Parent1WD;
-<ParentWorkDetails Parent="first Parent"  PullUpDetails=UpDateWorkDetails/>
+<CascadingValue Value="true">
+<ParentWorkDetails Parent="first Parent" PullUpDetails=UpDateWorkDetails/>
 <NextPageButton Url="@GetUrl()"/>
-
+</CascadingValue>
 @code {
 	[Parameter]
 	public string Children {get;  set; }
 	[Parameter]
 	public string TaxYear { get; set; }
 
-	//protected override void OnInitialized()
-	//{
-	//	Parent1WD.IsTaxCalculator = true;
-	//	Parent1WD.Period = Period.Year;
-	//	Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
-	//}
+	protected override void OnAfterRender(bool firstRender)
+	{
+		if(firstRender)
+		{
+		Parent1WD.Period = Period.Year;
+		Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
+		}
+	}
 
 	private string GetUrl()
 	{
@@ -28,8 +32,5 @@
 		Parent1WD.HoursPW = workDetails.HoursPW;
 		Parent1WD.HourlyRate = workDetails.HourlyRate;
 		Parent1WD.IsMinWage = workDetails.IsMinWage;
-		Parent1WD.IsTaxCalculator = true;
-		Parent1WD.Period = Period.Year;
-		Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
 	}
 }

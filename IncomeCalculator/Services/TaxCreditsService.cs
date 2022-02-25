@@ -1,6 +1,9 @@
 ﻿using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using IncomeCalculator.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System;
 
 namespace IncomeCalculator.Services
 {
@@ -11,12 +14,19 @@ namespace IncomeCalculator.Services
         private FinancialDetails _financialDetails;
         private ChildTaxCredit _ctcDetails;
         private WorkingTaxCredit _wtcDetails;
-        public TaxCreditsService(FinancialDetails financialDetails)
+        public TaxCreditsService(FinancialDetails financialDetails )
         {
             _financialDetails = financialDetails;
             _tcPersistence = new TaxCreditsPersistence(new BenefitsContext(), _financialDetails.TaxYear);
-            _wtcDetails = _tcPersistence.WTCDetails();
-            _ctcDetails = _tcPersistence.CTCDetails();
+            try
+            {
+                _wtcDetails = _tcPersistence.WTCDetails();
+                _ctcDetails = _tcPersistence.CTCDetails();
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public decimal GetTaxCreditsTotal()
         {
@@ -24,13 +34,13 @@ namespace IncomeCalculator.Services
             var children = _financialDetails.ChildrenAmount;
 
             decimal maxTaxCredits = MaxCredits(children);
-            decimal? withdrawalAmount = WithdrawalAmount(totalIncome);
+            decimal withdrawalAmount = WithdrawalAmount(totalIncome);
 
             var totalCredits = maxTaxCredits - withdrawalAmount;
 
             return (decimal)totalCredits;
         }
-        private decimal? GetTotalIncome()
+        private decimal GetTotalIncome()
         {
             return _financialDetails.Parent1WorkDetails.Total
                         + _financialDetails.Parent2WorkDetails.Total + _financialDetails.OtherIncome;
@@ -45,17 +55,17 @@ namespace IncomeCalculator.Services
             return maxTaxCredits;
         }
 
-        private decimal? WithdrawalAmount(decimal? totalIncome)
+        private decimal WithdrawalAmount(decimal totalIncome)
         {
-            decimal? overThreshold = OverThresholdAmount(totalIncome);
+            decimal overThreshold = OverThresholdAmount(totalIncome);
 
             var withdrawalAmount = overThreshold * (decimal)_wtcDetails.WithdrawalRate;
             return withdrawalAmount;
         }
 
-        private decimal? OverThresholdAmount(decimal? totalIncome)
+        private decimal OverThresholdAmount(decimal totalIncome)
         {
-            decimal? overThreshold = 0;
+            decimal overThreshold = 0;
 
             if (totalIncome > _wtcDetails.Threshold && totalIncome < _ctcDetails.Threshold)
                 overThreshold = totalIncome - _wtcDetails.Threshold;
@@ -65,15 +75,13 @@ namespace IncomeCalculator.Services
             return overThreshold;
         }
 
-        private decimal CtcOverThreshold(decimal? totalIncome)
+        private decimal CtcOverThreshold(decimal totalIncome)
         {
             var ctcOverThreshold = totalIncome - _ctcDetails.Threshold;
             var wtcOverThreshold = (totalIncome - ctcOverThreshold) - _wtcDetails.Threshold;
             var overThreshold = ctcOverThreshold + wtcOverThreshold;
             return (decimal)overThreshold;
         }
-
-
     }
 }
 

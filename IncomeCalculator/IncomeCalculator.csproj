@@ -8,35 +8,33 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\lib\**" />
-    <Compile Remove="wwwroot\NewFolder\**" />
     <Content Remove="wwwroot\lib\**" />
-    <Content Remove="wwwroot\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
-    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
     <None Remove="wwwroot\lib\**" />
-    <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
    
     <PackageReference Include="BlazorFlex" Version="0.5.0" />
     <PackageReference Include="BlazorStyled" Version="3.1.0" />
-    <PackageReference Include="BootstrapBlazor" Version="6.0.4" />
-    <PackageReference Include="Excubo.Blazor.TreeViews" Version="3.0.1" />
+    <PackageReference Include="BootstrapBlazor" Version="6.3.2" />
+    <PackageReference Include="Excubo.Blazor.TreeViews" Version="3.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.15.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Radzen.Blazor" Version="3.12.2" />
-    <PackageReference Include="Syncfusion.Blazor" Version="19.3.0.54" />
+    <PackageReference Include="Radzen.Blazor" Version="3.15.6" />
+    <PackageReference Include="Syncfusion.Blazor" Version="19.4.0.53" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

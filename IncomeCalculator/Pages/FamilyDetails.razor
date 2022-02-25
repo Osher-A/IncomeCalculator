@@ -6,8 +6,6 @@
 <h1 class="mb-9 mt-4  text-center header" >Tax Credit's Calculator</h1>
 
 <EditForm Model="@this" class="p-3">
-<DataAnnotationsValidator/>
-
 <div class="row mt-5">
 	<div class="col-5 text-right">
 		<label for="children" class="form-col-form-label ">No. of children</label>
@@ -19,7 +17,7 @@
 
 <div class=row>
 	<div class="col-6 offset-5 text-left">
-     <text style="font-size: 11px;" > * Only children born before 06/04/2017</text>
+     <text style="font-size: 11px;" > * Max 2 children if born after 06/04/2017</text>
 	</div>
 </div>
 
@@ -34,8 +32,8 @@
 
 @code {
 
-	public DateTime TaxYear { get; set; }
-	public int ChildrenAmount {  get;  set; }
+	public DateTime TaxYear { get; set; } = new DateTime(2021,01,01);
+	public int ChildrenAmount { get; set; } = 0;
 
 
 	private void ChangeDate(DateTime date)

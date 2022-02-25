@@ -27,7 +27,7 @@
 			<label class="form-label">Period to calculate</label>
 	</div>
 	<div class="col-6  align-self-center">
-		<InputRadioGroup @bind-Value="WdModel.Period" class="form-control">
+		<InputRadioGroup @bind-Value="WdModel.Period" class="form-control" >
 			@foreach (var period in (Period[])Enum.GetValues(typeof(Period)))
 			{
 		        <InputRadio Value="period" />
@@ -64,6 +64,7 @@
 		WdModel = new WorkDetails();
 	}
 
+
 	private void ChangeDate(DateTime taxYear)
 	{
 		WdModel.MinWage.TaxYear = taxYear;
@@ -76,5 +77,8 @@
 		WdModel.HoursPW = workDetails.HoursPW;
 		WdModel.HourlyRate = workDetails.HourlyRate;
 		WdModel.Age = workDetails.Age;
+		WdModel.Total = workDetails.Total;
+
+		StateHasChanged();
 	}
 }

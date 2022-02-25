@@ -1,6 +1,7 @@
 ﻿using IncomeCalculator.Data;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace IncomeCalculator.DAL
 {
@@ -15,12 +16,28 @@ namespace IncomeCalculator.DAL
         }
         public ChildTaxCredit CTCDetails()
         {
-            return _benefitsContext.ChildTaxCredits.Single(ctc => ctc.TaxYear.Year == _dateTime.Year);
+            try
+            {
+                return _benefitsContext.ChildTaxCredits.Single(ctc => ctc.TaxYear.Year == _dateTime.Year);
+            }
+            catch (InvalidOperationException )
+            {
+                throw new Exception("No records found!");
+            }
+            catch (Exception) {  throw ; }
         }
 
         public WorkingTaxCredit WTCDetails()
         {
-            return _benefitsContext.WorkingTaxCredits.Single(wtc => wtc.TaxYear.Year == _dateTime.Year);
+            try
+            {
+                return _benefitsContext.WorkingTaxCredits.Single(wtc => wtc.TaxYear.Year == _dateTime.Year);
+            }
+            catch (InvalidOperationException )
+            {
+                throw new Exception("No records found!"); 
+            }
+            catch (Exception) { throw; }
         }
     }
 }

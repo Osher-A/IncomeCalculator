@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace IncomeCalculator.Models
 {
@@ -9,7 +10,7 @@ namespace IncomeCalculator.Models
 		public decimal OtherIncome { get; set; }
 		public int ChildrenAmount { get; set; }
 		public DateTime TaxYear { get; set; }
-		public decimal? CombindedIncome
+		public decimal CombindedIncome
 		{
 			get { return Parent1WorkDetails.Total + Parent2WorkDetails.Total + OtherIncome; }
 		}

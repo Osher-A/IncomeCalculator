@@ -1,9 +1,11 @@
-﻿<div class="row mb-4">
+﻿<EditForm Model=WdModel>
+<DataAnnotationsValidator/>
+<div class="row mb-4">
 		<div class="col-5 text-right">
 			<label for="minWage" class="form-label">Min Wage</label>
 		</div>
 		<div class="col-3" >
-			<InputCheckbox  name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage"></InputCheckbox>
+			<InputCheckbox  name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage" ></InputCheckbox>
 		</div>
 	</div>
 
@@ -12,7 +14,8 @@
 			<label for="hours" class="form-label">Hours per week</label>
 		</div>
 		<div class="col-3" >
-			<InputNumber id="hours" @bind-Value="WdModel.HoursPW" class="form-control border-dark" @onfocusout=UpdateParentDetails/>
+			<input type="number" id="hours" @bind-value="WdModel.HoursPW" @bind-value:event="oninput" class="form-control border-dark" @onmouseleave=UpdateParentDetails/>
+            <ValidationMessage For="@(() => WdModel.HoursPW)"/>
 		</div>
 </div>
 
@@ -21,7 +24,7 @@
 			<label for="rate" class="form-label">Hourly rate</label>
 		</div>
 		<div class="col-3">
-			<InputNumber id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-Value="@WdModel.HourlyRate" @onfocusout=UpdateParentDetails/>
+			<input type="text" id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-value="@WdModel.HourlyRate" @bind-value:event="oninput"  @onmouseleave=UpdateParentDetails/>
 		</div>
    </div>
 
@@ -33,56 +36,56 @@
 			<label for="age" class="form-label">Age</label>
 		</div>
 		<div class="col-3">
-			<InputNumber id="age" @bind-Value="WdModel.Age" class="form-control border-dark " />
+			<input type="number" id="age" @bind-value="WdModel.Age" @bind-value:event="oninput" class="form-control border-dark " />
 			<ValidationMessage For="@(() => WdModel.Age)"/>
 		</div>
 	</div>
+    </EditForm>
 
 	
 	@code{
-	public WorkDetails WdModel { get; set; }
-	public string Display
-	{
-		get
-		{
-			if (WdModel.IsMinWage)
-				return "normal";
-			else
-				return "none";
-		}
-	}
+    public WorkDetails WdModel { get; set; }
+    public string Display
+    {
+        get
+        {
+            if (WdModel.IsMinWage)
+                return "normal";
+            else
+                return "none";
+        }
+    }
 
-	public string DisplayTaxYearBox
-	{
-		get
-		{
-			if (WdModel.IsTaxCalculator || !WdModel.IsMinWage)
-				return "none";
-			else
-				return "normal";
-		}
-	}
+    public string DisplayTaxYearBox
+    {
+        get
+        {
+            if (IsTaxCalculator || !WdModel.IsMinWage)
+                return "none";
+            else
+                return "normal";
+        }
+    }
 
-	protected override void OnInitialized()
-	{
-		WdModel = new WorkDetails();
-		WdModel.MinWage.TaxYear = new DateTime(2020, 04, 06);
-	}
+    protected override void OnInitialized()
+    {
+        WdModel = new WorkDetails();
+        WdModel.MinWage.TaxYear = new DateTime(2020, 04, 06);
+    }
+    protected override void OnParametersSet()
+    {
+        StateHasChanged();
+    }
+    [CascadingParameter]
+    public bool IsTaxCalculator { get; set; }
+    [Parameter]
+    public Action<DateTime> OnDateChange { get; set; }
+    [Parameter]
+    public Action<WorkDetails> OnDetailsChange { get; set; }
 
-	[Parameter]
-	public Action<DateTime> OnDateChange { get; set; }
-	[Parameter]
-	public Action<WorkDetails> OnDetailsChange { get; set; }
+    private void ChangeParentDate(DateTime date) => OnDateChange?.Invoke(date);
 
-	private void ChangeParentDate(DateTime date)
-	{
-		OnDateChange?.Invoke(date);
-	}
+    private void UpdateParentDetails(EventArgs e) => OnDetailsChange?.Invoke(WdModel);
 
-	private void UpdateParentDetails(FocusEventArgs e)
-	{
-		OnDetailsChange?.Invoke(WdModel);
-	}
-	
 }
 

@@ -1,35 +1,40 @@
-﻿using IncomeCalculator.Data;
+﻿using BootstrapBlazor.Components;
+using IncomeCalculator.Data;
 using IncomeCalculator.Services;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace IncomeCalculator.Models
 {
     public class WorkDetails
     {
-        private decimal _hourlyRate;
+        private string _hourlyRate = "0";
         private readonly MinWageService _minWageService;
 
         [Range(10, 120, ErrorMessage = "Please enter a valid age!")]
         public int Age { get; set; }
-        [Range(2, 168)]
+        [Range(1, 168)]
         public decimal HoursPW { get; set; }
         public bool IsMinWage { get; set; }
-        public bool IsTaxCalculator { get; set; }
         public MinWage MinWage { get; set; } = new MinWage();
         [Required]
         public Period Period { get; set; }
-        public decimal? Total { get { return GetTotal(); } set { } }
-        public decimal HourlyRate
+        public decimal Total { get { return GetTotal(); } set { } }
+        public string HourlyRate
         {
             get
             {
                 if (IsMinWage && HoursPW >= 1)
                     GetMinWage();
-
-                return _hourlyRate;
+                decimal rate;
+                var parseAble = decimal.TryParse(_hourlyRate, System.Globalization.NumberStyles.Currency, CultureInfo.CurrentCulture, out rate);
+                if (parseAble)
+                    return rate.ToString("C");
+                else
+                    return "£0.00";
             }
-            set { _hourlyRate = value; }
+            set => _hourlyRate = value;
         }
 
         public WorkDetails()
@@ -37,12 +42,11 @@ namespace IncomeCalculator.Models
             _minWageService = new MinWageService(new DAL.MinWagePersistence(new BenefitsContext()));
         }
 
-        private decimal? GetTotal()
+        private decimal GetTotal()
         {
-            if (HoursPW <= 0 || HourlyRate <= 0)
-                return null;
-
-            var weeklyWage = HoursPW * HourlyRate;
+            decimal hourlyRate = decimal.Parse(HourlyRate, NumberStyles.Currency);
+           
+            var weeklyWage = HoursPW * hourlyRate;
             switch (Period)
             {
                 case Period.Month:
@@ -59,7 +63,7 @@ namespace IncomeCalculator.Models
             try
             {
                 var minwage = _minWageService.GetMinWage(Age, MinWage.TaxYear);
-                _hourlyRate = minwage.Wage;
+                _hourlyRate = minwage.Wage.ToString();
             }
             catch (Exception) { }
         }
