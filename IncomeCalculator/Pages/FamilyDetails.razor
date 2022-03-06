@@ -1,29 +1,36 @@
 ﻿@page "/family-details"
+@inject FinancialDetails Fd
 
-
-<PageTitle>Tax Credits Calculator</PageTitle>
-
+<PageTitle>Tax Credit's Calculator</PageTitle>
 <h1 class="mb-9 mt-4  text-center header" >Tax Credit's Calculator</h1>
 
 <EditForm Model="@this" class="p-3">
 <div class="row mt-5">
 	<div class="col-5 text-right">
-		<label for="children" class="form-col-form-label ">No. of children</label>
+		<label for="children" class="form-col-form-label ">Single Parent</label>
 	</div>
 	<div class="col-6">
-		<InputNumber  id="children" @bind-Value="ChildrenAmount" class="form-control border-dark"/>
+		<InputCheckbox id="parents"  @bind-Value="Fd.SingleParent" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;"/>
+	</div>
+</div>
+<div class="row mt-4">
+	<div class="col-5 text-right">
+		<label for="children" class="form-col-form-label ">Children</label>
+	</div>
+	<div class="col-6">
+		<InputNumber  id="children" @bind-Value="Fd.ChildrenAmount" class="form-control border-dark"/>
 	</div>
 </div>
 
 <div class=row>
 	<div class="col-6 offset-5 text-left">
-     <text style="font-size: 11px;" > * Max 2 children if born after 06/04/2017</text>
+     <text style="font-size: 11px;" > * Only children under 16</text>
 	</div>
 </div>
 
 <div class="row mt-4">
 	<div class="col-12 ">
-		<TaxYearBox   OnDateChange=ChangeDate />
+		<TaxYearBox   ChangeDate=OnChangeDate />
 	</div>
 </div>
 
@@ -32,19 +39,24 @@
 
 @code {
 
-	public DateTime TaxYear { get; set; } = new DateTime(2021,01,01);
+	//public DateTime TaxYear { get; set; } = new DateTime(2021,01,01);
 	public int ChildrenAmount { get; set; } = 0;
 
-
-	private void ChangeDate(DateTime date)
+	protected override void OnInitialized()
 	{
-		TaxYear = date;
-		//StateHasChanged();
+		Fd.TaxYear = new DateTime(2021, 01, 01);
+	}
+
+	private void OnChangeDate(DateTime date)
+	{
+		//TaxYear = date
+		Fd.TaxYear = date; 
 	}
 
 	private string SetUrl()
 	{
-		return "first-parent/" + ChildrenAmount + "/"  + TaxYear.ToLongDateString();
+		//return "first-parent/" + ChildrenAmount + "/"  + TaxYear.ToLongDateString();
+		return "first-parent";
 	}
 
 	

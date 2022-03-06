@@ -5,7 +5,7 @@
 			<label for="minWage" class="form-label">Min Wage</label>
 		</div>
 		<div class="col-3" >
-			<InputCheckbox  name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage" ></InputCheckbox>
+			<InputCheckbox id="checkBox" name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage" ></InputCheckbox>
 		</div>
 	</div>
 
@@ -13,8 +13,8 @@
 		<div class="col-5 text-right">
 			<label for="hours" class="form-label">Hours per week</label>
 		</div>
-		<div class="col-3" >
-			<input type="number" id="hours" @bind-value="WdModel.HoursPW" @bind-value:event="oninput" class="form-control border-dark" @onmouseleave=UpdateParentDetails/>
+		<div class="col-3" id="hours">
+			<input type="number"  @bind-value="WdModel.HoursPW" @bind-value:event="oninput" class="form-control border-dark" @onmouseleave=OnDetailsChanged/>
             <ValidationMessage For="@(() => WdModel.HoursPW)"/>
 		</div>
 </div>
@@ -23,15 +23,15 @@
 		<div class="col-5 text-right">
 			<label for="rate" class="form-label">Hourly rate</label>
 		</div>
-		<div class="col-3">
-			<input type="text" id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-value="@WdModel.HourlyRate" @bind-value:event="oninput"  @onmouseleave=UpdateParentDetails/>
+		<div class="col-3" id="rate">
+			<input type="text"  placeHolder="£0.00" class="form-control border-dark" @bind-value="@WdModel.HourlyRate" @bind-value:event="oninput"  @onmouseleave=OnDetailsChanged/>
 		</div>
    </div>
 
-   <TaxYearBox  Display="@DisplayTaxYearBox" OnDateChange=ChangeParentDate/>
+   <TaxYearBox  Display="@DisplayTaxYearBox" ChangeDate=OnChangeDate/>
 
    
-   <div class="row mb-4 " style="display: @Display">
+   <div class="row mb-4" id="ageRow" style="display: @Display">
 		<div class="col-5 text-right">
 			<label for="age" class="form-label">Age</label>
 		</div>
@@ -70,7 +70,7 @@
     protected override void OnInitialized()
     {
         WdModel = new WorkDetails();
-        WdModel.MinWage.TaxYear = new DateTime(2020, 04, 06);
+        WdModel.TaxYear = new DateTime(2020, 04, 06);
     }
     protected override void OnParametersSet()
     {
@@ -79,13 +79,13 @@
     [CascadingParameter]
     public bool IsTaxCalculator { get; set; }
     [Parameter]
-    public Action<DateTime> OnDateChange { get; set; }
+    public Action<DateTime> ChangeDate { get; set; }
     [Parameter]
-    public Action<WorkDetails> OnDetailsChange { get; set; }
+    public Action<WorkDetails> ChangeDetails { get; set; }
 
-    private void ChangeParentDate(DateTime date) => OnDateChange?.Invoke(date);
+    private void OnChangeDate(DateTime date) => ChangeDate?.Invoke(date);
 
-    private void UpdateParentDetails(EventArgs e) => OnDetailsChange?.Invoke(WdModel);
+    private void OnDetailsChanged(EventArgs e) => ChangeDetails?.Invoke(WdModel);
 
 }
 

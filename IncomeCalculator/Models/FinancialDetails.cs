@@ -5,6 +5,7 @@ namespace IncomeCalculator.Models
 {
 	public class FinancialDetails
 	{
+		public bool SingleParent { get; set; }
 		public WorkDetails Parent1WorkDetails { get; set; }
 		public WorkDetails Parent2WorkDetails { get; set; }
 		public decimal OtherIncome { get; set; }
@@ -12,7 +13,13 @@ namespace IncomeCalculator.Models
 		public DateTime TaxYear { get; set; }
 		public decimal CombindedIncome
 		{
-			get { return Parent1WorkDetails.Total + Parent2WorkDetails.Total + OtherIncome; }
+			get 
+			{
+				if (Parent2WorkDetails != null)
+					return Parent1WorkDetails.Total + Parent2WorkDetails.Total + OtherIncome;
+				else
+					return Parent1WorkDetails.Total + OtherIncome;
+			}
 		}
 	}
 }

@@ -7,8 +7,8 @@
 
 <EditForm Model=Fd OnValidSubmit=Submit>
 <CascadingValue Value="true" >
-<ParentWorkDetails Parent="Second Parent" PullUpDetails=SetDetails/>
-<NextPageButton  Text="Submit" />
+<ParentWorkDetails Parent="Second Parent" ChangeDetails=OnChangeDetails/>
+<NextPageButton  Text="Results" />
 </CascadingValue>
 </EditForm>	
 
@@ -19,13 +19,12 @@
 
 	protected override void OnInitialized()
 	{
-		Fd.ChildrenAmount = Convert.ToInt32(Children);
-		Fd.Parent1WorkDetails = Parent1WD;
+		//Fd.ChildrenAmount = Convert.ToInt32(Children);
 		Fd.Parent2WorkDetails = new WorkDetails () {Period = Period.Year};
-		Fd.TaxYear = Parent1WD.MinWage.TaxYear;
+		Fd.Parent2WorkDetails.TaxYear = Fd.TaxYear;
 	}
 
-	private void SetDetails(WorkDetails parent2WorkDetails)
+	private void OnChangeDetails(WorkDetails parent2WorkDetails)
 	{
 		parent2WorkDetails.Period = Period.Year;
 		Fd.Parent2WorkDetails = parent2WorkDetails;

@@ -11,7 +11,7 @@
         box-sizing: border-box;
     }
 </style>
-<h1 class="header text-center">Input Results</h1>
+<h1 class="header text-center">Results</h1>
 
 <EditForm Model=@Fd>
 <div class="row p-3">
@@ -34,14 +34,14 @@
 
 <div class="row  p-3 ">
     <div class="col-6 text-right">
-        <label>Parent 1 weekly income</label>
+        <label>@Parent weekly income</label>
     </div>
     <div class="col-6 ">
         <input type="text" class="rounded" readonly Value="@String.Format("{0:C}" ,Parent1WeeklyIncome)"/>
     </div>
 </div>
 
-<div class="row  p-3">
+<div class="row  p-3" style="display: @Display">
     <div class="col-6 text-right">
         <label>Parent 2 weekly income</label>
     </div>
@@ -71,34 +71,59 @@
 
 
 @code {
-    //[CascadingParameter]
-    //public int ChildredAmount {  get;  set; }
 
     public decimal Total { get; set; }
     public decimal Parent1WeeklyIncome { get; private set; }
     public decimal Parent2WeeklyIncome { get; private set; }
+    public string Parent { get; private set; }
+    public string Display { get; private set; } 
 
     protected async override void OnInitialized()
     {
+        if(Fd.SingleParent)
+        {
+            Parent = "Parent";
+            Display = "None";
+        }
+        else
+        {
+            Parent = "Parent 1";
+            Display = "Normal";
+        }
+
         Parent1WeeklyIncome = (Fd.Parent1WorkDetails.Total > 0)? Fd.Parent1WorkDetails.Total / 52: 0;
-        Parent2WeeklyIncome = (Fd.Parent2WorkDetails.Total > 0)? Fd.Parent2WorkDetails.Total / 52: 0;
+        Parent2WeeklyIncome = (Fd.Parent2WorkDetails?.Total > 0)? Fd.Parent2WorkDetails.Total / 52: 0;
+
         try
         {
             var taxCreditService = new TaxCreditsService(Fd);
-            Total = taxCreditService.GetTaxCreditsTotal();
-            await TostrAlert("success", "Successfull query!");
-
+            var results = taxCreditService.GetTaxCreditsTotal();
+            Total = results.Item1;
+            AlertUser(results.Item2);
         }
         catch (Exception ex)
         {
-          await  TostrAlert("error", ex.Message);
+            await  TostrAlert("error", ex.Message);
         }
 
+    }
+
+    private async void AlertUser(string message)
+    {
+        if (String.IsNullOrWhiteSpace(message))
+            await TostrAlert("success", "Task completed successfully!");
+        else
+            await SweetAlert("Information", message);
     }
 
     private async Task TostrAlert(string type, string message)
     {
         await JsRuntime.InvokeVoidAsync("ShowToastr", type , message);
+    }
+
+    private async Task SweetAlert(string heading, string message)
+    {
+        await JsRuntime.InvokeVoidAsync("ShowSwal", heading, message);
     }
 
 }

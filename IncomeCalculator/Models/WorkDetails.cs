@@ -17,7 +17,7 @@ namespace IncomeCalculator.Models
         [Range(1, 168)]
         public decimal HoursPW { get; set; }
         public bool IsMinWage { get; set; }
-        public MinWage MinWage { get; set; } = new MinWage();
+		public DateTime TaxYear { get; set; }
         [Required]
         public Period Period { get; set; }
         public decimal Total { get { return GetTotal(); } set { } }
@@ -62,7 +62,7 @@ namespace IncomeCalculator.Models
         {
             try
             {
-                var minwage = _minWageService.GetMinWage(Age, MinWage.TaxYear);
+                var minwage = _minWageService.GetMinWage(Age, TaxYear);
                 _hourlyRate = minwage.Wage.ToString();
             }
             catch (Exception) { }

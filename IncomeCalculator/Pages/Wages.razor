@@ -20,14 +20,14 @@
 <EditForm Model="@WdModel" class="p-3 ml-1 mr-5" style=" margin-top: 3%">
 
 <DataAnnotationsValidator/>
-<WorkInfo OnDetailsChange=UpdateWorkDetails OnDateChange=ChangeDate></WorkInfo>
+<WorkInfo ChangeDetails=OnDetailsChange ChangeDate=OnChangeDate></WorkInfo>
 
 <div class="row mb-5 ">
 	<div class="col-5 text-right">
 			<label class="form-label">Period to calculate</label>
 	</div>
-	<div class="col-6  align-self-center">
-		<InputRadioGroup @bind-Value="WdModel.Period" class="form-control" >
+	<div class="col-6  align-self-center" id="radioButton">
+		<InputRadioGroup  @bind-Value="WdModel.Period" class="form-control" >
 			@foreach (var period in (Period[])Enum.GetValues(typeof(Period)))
 			{
 		        <InputRadio Value="period" />
@@ -36,7 +36,6 @@
         </InputRadioGroup>
      </div>
 </div>
-
  <div class="row ">
   <div class="col-12">
    <h2 class="text-center" style="display: @TotalDisplay">@string.Format("Total per {0}: {1:C}",WdModel.Period.ToString(),WdModel.Total)</h2>
@@ -65,13 +64,13 @@
 	}
 
 
-	private void ChangeDate(DateTime taxYear)
+	private void OnChangeDate(DateTime taxYear)
 	{
-		WdModel.MinWage.TaxYear = taxYear;
+		WdModel.TaxYear = taxYear;
 		//StateHasChanged();
 	}
 
-	private void UpdateWorkDetails(WorkDetails workDetails)
+	private void OnDetailsChange(WorkDetails workDetails)
 	{
 		WdModel.IsMinWage = workDetails.IsMinWage;
 		WdModel.HoursPW = workDetails.HoursPW;

@@ -1,6 +1,6 @@
-﻿<h2 class="text-center header" style="font-size: 35px;">Work Details of @Parent</h2>
+﻿<h2 class="text-center header mt-4" style="font-size: 35px;">Work Details of @Parent</h2>
 <EditForm Model="@WorkDetails" class="p-3">
-	 <WorkInfo OnDetailsChange=UpdateDetails ></WorkInfo>
+	 <WorkInfo ChangeDetails=OnDetailsChange ></WorkInfo>
 </EditForm>
 
 @code {
@@ -8,16 +8,16 @@
 	public string Parent { get; set; }
 	public WorkDetails WorkDetails { get; set; }
 	[Parameter]
-	public Action<WorkDetails> PullUpDetails { get; set; }
+	public Action<WorkDetails> ChangeDetails { get; set; }
 
 	protected override void OnInitialized()
 	{
 		WorkDetails = new WorkDetails { Period = Period.Year };
 	}
 
-	private void UpdateDetails(WorkDetails workDetails)
+	private void OnDetailsChange(WorkDetails workDetails)
 	{
-		PullUpDetails?.Invoke(workDetails);
+		ChangeDetails?.Invoke(workDetails);
 	}
 }
 

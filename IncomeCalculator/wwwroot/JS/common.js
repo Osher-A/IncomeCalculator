@@ -8,3 +8,7 @@
     }
 
 }
+
+window.ShowSwal = (heading, message) => {
+    Swal.fire(heading, message, 'info');
+}

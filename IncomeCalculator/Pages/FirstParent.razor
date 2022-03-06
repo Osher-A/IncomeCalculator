@@ -1,32 +1,52 @@
 ﻿@page "/first-parent/{Children}/{TaxYear}"
-@page "/firt-parent"
+@page "/first-parent"
 
+@inject FinancialDetails Fd;
 @inject WorkDetails Parent1WD;
+
 <CascadingValue Value="true">
-<ParentWorkDetails Parent="first Parent" PullUpDetails=UpDateWorkDetails/>
-<NextPageButton Url="@GetUrl()"/>
+<ParentWorkDetails Parent="@_parent" ChangeDetails=OnChangeDetails/>
+<NextPageButton Url="@_nextPageUrl"/>
 </CascadingValue>
 @code {
 	[Parameter]
 	public string Children {get;  set; }
 	[Parameter]
 	public string TaxYear { get; set; }
+	private string _parent;
+	private string _nextPageButton;
+	private string _nextPageUrl;
+
+	protected override void OnInitialized()
+	{
+		if (Fd.SingleParent)
+		{
+			_parent = "parent";
+			_nextPageButton = "Results";
+			_nextPageUrl = "result";
+		}
+		else
+		{
+			_parent = "first parent";
+			_nextPageButton = "Next";
+			_nextPageUrl = "second-parent";
+			//_nextPageUrl = "second-parent/" + Children;
+		}
+
+			Parent1WD.TaxYear = Fd.TaxYear;
+			Fd.Parent1WorkDetails = Parent1WD;
+	}
 
 	protected override void OnAfterRender(bool firstRender)
 	{
 		if(firstRender)
 		{
-		Parent1WD.Period = Period.Year;
-		Parent1WD.MinWage = new MinWage { TaxYear = Convert.ToDateTime(TaxYear) };
+			Parent1WD.Period = Period.Year;
+			Parent1WD.TaxYear = Convert.ToDateTime(TaxYear) ;
 		}
 	}
 
-	private string GetUrl()
-	{
-		return "second-parent/" + Children;
-	}
-
-	private void UpDateWorkDetails(WorkDetails workDetails)
+	private void OnChangeDetails(WorkDetails workDetails)
 	{
 		Parent1WD.Age = workDetails.Age;
 		Parent1WD.HoursPW = workDetails.HoursPW;

@@ -18,7 +18,9 @@ namespace IncomeCalculator.Services
 
         public MinWage GetMinWage(int age, DateTime taxYear)
         {
-            return MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age).FirstOrDefault();
+            return MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
+                .OrderByDescending(mw => mw.Wage)
+                .First();
         }
 
         private async void SetMinWages()
