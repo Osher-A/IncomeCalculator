@@ -1,9 +1,13 @@
 ﻿@using IncomeCalculator.Componnents
+@using IncomeCalculator.Data
 @using IncomeCalculator.Pages
+@using IncomeCalculator.DAL
+@using Moq
 
 @inherits BunitTestContext
 
 @code {
+    private Mock<IMinWageRepository> _minWageRepo;
     private IRenderedFragment? _cut;
     private IRenderedComponent<WorkInfo>? _workInfoComponent;
     private AngleSharp.Dom.IElement _rateField;
@@ -11,17 +15,21 @@
     [SetUp]
     public void SetUp()
     {
-        _cut = Render( @<Wages/>);
+        _minWageRepo = new Mock<IMinWageRepository>();
+        _minWageRepo.Setup(mw => mw.GetMinWages()).Returns(GetMinWageData());
+        Services.AddSingleton<IMinWageRepository>(_minWageRepo.Object);
+        _cut = Render( 
+    @<Wages/>);
         _workInfoComponent = _cut.FindComponent<WorkInfo>();
-        _hoursField = _workInfoComponent.Find("#hours input");
-        _rateField = _workInfoComponent.Find("#rate input");
+        _hoursField = _workInfoComponent.Find("#hours");
+        _rateField = _workInfoComponent.Find("#rate");
     }
     [Test]
     public void WagesForm_WhenNotFillingRequiredFields_TotalDisplayShouldBeNone()
     {
-       _workInfoComponent.Find("#hours input").Input(1);
+       _workInfoComponent.Find("#hours").Input(1);
        _cut.Find("h2").MarkupMatches(
-    @<h2 class="text-center" style="display: none">Total per Week: £0.00</h2>);
+    @<h2 class="text-center ml-5" style="display: none">Total per Week: £0.00</h2>);
     }
     
     [Test]
@@ -33,7 +41,7 @@
         _rateField.TriggerEvent("onmouseleave", new EventArgs());
 
         _cut.Find("h2").MarkupMatches(
-    @<h2 class="text-center" style="display: normal">Total per Week: £100.00</h2>);
+    @<h2 class="text-center ml-5" style="display: normal">Total per Week: £100.00</h2>);
     }
 
      [Test]
@@ -47,7 +55,7 @@
         _rateField.TriggerEvent("onmouseleave", new EventArgs());
 
         _cut.Find("h2").MarkupMatches(
-    @<h2 class="text-center" style="display: normal">Total per Month: £433.33</h2>);
+    @<h2 class="text-center ml-5" style="display: normal">Total per Month: £433.33</h2>);
     }
 
      [Test]
@@ -61,12 +69,12 @@
         _rateField.TriggerEvent("onmouseleave", new EventArgs());
 
         _cut.Find("h2").MarkupMatches(
-    @<h2 class="text-center" style="display: normal">Total per Year: £5,200.00</h2>
+    @<h2 class="text-center ml-5" style="display: normal">Total per Year: £5,200.00</h2>
     );
     }
 
     [Test]
-    public void wagesform_whenselectingminwagecheckbox_taxyearAndAgeboxgetsdisplayed()
+    public void WagesForm_WhenSelectingMinWageCheckbox_TaxyearAndAgeboxDisplayed()
     {
         //Arrange
         var minWageCheckBox = _workInfoComponent.Find("#checkBox");
@@ -75,18 +83,24 @@
         minWageCheckBox.Change(true);
 
         //Assert
-        _workInfoComponent.Find("#ageRow").MarkupMatches(
-    @<div class="row mb-4" id="ageRow" style="display: normal">
-  <div class="col-5 text-right">
-    <label for="age" class="form-label">Age</label>
-  </div>
-  <div class="col-3">
-    <input type="number" id="age" class="form-control border-dark " value="0" >
-  </div>
-    </div>
-    );
+        _workInfoComponent.Find("#ageRow").MarkupMatches( @<div id="ageRow" style="display: normal; grid-column: 1 / 2;" class="text-right"> 
+        <label for="age" class="form-label">Age</label></div>);
 
         _workInfoComponent.FindComponent<TaxYearBox>().MarkupMatches(@<TaxYearBox Display="normal"/>);
 
     }
+      private List<MinWage> GetMinWageData()
+    {
+        return new List<MinWage>
+        {
+            new MinWage(0, new DateTime(2020, 04, 06), 4.55m),
+            new MinWage(18, new DateTime(2020 ,04, 06), 6.45m),
+            new MinWage(21, new DateTime(2020, 04, 06), 8.20m),
+            new MinWage(25, new DateTime(2020, 04, 06), 8.72m),
+            new MinWage(0, new DateTime(2021, 04, 06), 4.62m),
+            new MinWage(18, new DateTime(2021, 04, 06), 6.56m),
+            new MinWage(21, new DateTime(2021, 04, 06), 8.36m),
+            new MinWage(25, new DateTime(2021, 04, 06), 8.91m)
+        };
+}
 }

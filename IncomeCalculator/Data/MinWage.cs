@@ -12,5 +12,13 @@ namespace IncomeCalculator.Data
         public DateTime TaxYear { get; set; } = DateTime.Now;
         [Required]
         public decimal Wage { get; set; }
+
+        public MinWage() { }
+        public MinWage(int age, DateTime taxYear, decimal wage)
+        {
+            Age = age;
+            TaxYear = taxYear;
+            Wage = wage;
+        }
     }
 }

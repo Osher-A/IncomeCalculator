@@ -1,9 +1,144 @@
-﻿@inherits BunitTestContext
+﻿@using IncomeCalculator.Componnents
+@using IncomeCalculator.Data
+@using IncomeCalculator.Models
+@using IncomeCalculator.Pages
+@using IncomeCalculator.Services
+@using IncomeCalculator.DAL
+@using Moq;
+@inherits BunitTestContext
 @code {
-    [Test]
-    public void CreditForm_WhenFieldsFilledIn_TotalDisplayed()
+    private Mock<IMessageService> _messageService;
+    private Mock<IMinWageRepository> _minWageRepo;
+    private Mock<ITaxCreditsRepository> _tCRepo;
+    private DateTime _taxYear = new DateTime(2021, 04, 06);
+    [SetUp]
+    public void SetUp()
     {
-        var cut = Render(@<IncomeCalculator.Pages.ResultPage/>);
+        _messageService = new Mock<IMessageService>();
+        _minWageRepo = new Mock<IMinWageRepository>();
+        _minWageRepo.Setup(mw => mw.GetMinWages()).Returns(GetMinWageData());
+        _tCRepo = new Mock<ITaxCreditsRepository>();
+        _tCRepo.Setup(tc => tc.CTCDetails()).Returns(CTCDetails());
+        _tCRepo.Setup(tc => tc.WTCDetails()).Returns(WTCDetails());
+
+        Services.AddSingleton<IMessageService>(_messageService.Object);
+        Services.AddSingleton<IMinWageRepository>(_minWageRepo.Object);
+        Services.AddSingleton<WorkDetails>();
+        Services.AddSingleton<ITaxCreditsRepository>(_tCRepo.Object);
+        Services.AddSingleton<FinancialDetails>();
+    }
+
+    [Test]
+    public void TaxCreditsForms_WhenNoFieldsAreFilledIn_TotalCreditsIsZero()
+    {
+        var cut = Render(
+    @<IncomeCalculator.Pages.FamilyDetails/>
+    );
+       cut.Find("#parents").Change(true);
+
+        var cut2 = Render(
+    @<FirstParent/>
+    );
+
+        var cut3 = Render(
+    @<ResultPage/>);
+        cut3.Find("#results").MarkupMatches(@<input type="text" id="results" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="£0.00"/>);
 
     }
+    [Test]
+    public void TaxCreditsForms_SingleParentWith2ChildrenAnd16hrsPW_TotalDisplaysAccordingly()
+    {
+        var cut = Render(
+    @<IncomeCalculator.Pages.FamilyDetails/>
+    );
+        cut.Find("#parents").Change(true);
+        cut.Find("#children").Change(2);
+        cut.Find("#year").Change("2021-2022");
+
+        var cut2 = Render(
+    @<FirstParent/>
+    );
+        var hoursField = cut2.Find("#hours");
+        hoursField.Input(16);
+        hoursField.TriggerEvent("onmouseleave", new EventArgs());
+        var rateField = cut2.Find("#rate");
+        rateField.Input("£10.00");
+        rateField.TriggerEvent("onmouseleave", new EventArgs());
+
+        var cut3 = Render(
+    @<ResultPage/>
+    );
+        cut3.Find("#parent1WeeklyIncome").MarkupMatches(
+    @<input type="text" id="parent1WeeklyIncome" class="rounded" readonly Value="£160.00"/>
+    );
+        cut3.Find("#yearlyIncome").MarkupMatches(
+    @<input type="text" id="yearlyIncome" class="rounded" readonly value="£8,320.00" />
+    );
+        cut3.Find("#results").MarkupMatches(
+    @<input type="text" id="results" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="£7,520.45"/>
+    );
+    }
+
+    [Test]
+    public void CreditsForm_2ParentsWithChildrenTotalOf30hrsPW_ResultsDisplayedAcordingly()
+    {
+
+    }
+    [Test]
+    public void CreditsForm_Totalof24hrsPW_ResultsDisplayedAcordingly()
+    {
+
+    }
+    [Test]
+    public void CreditsForm_2ParentsLessThen24hrsPW_ResultsDisplayedAcordingly()
+    {
+
+    }
+    [Test]
+    public void CreditsForm_OneOfParentsLessThen16hrsPW_ResultsDisplayedAcordingly()
+    {
+
+    }
+
+    private ChildTaxCredit CTCDetails() =>  GetCTCData().Single(ctc => ctc.TaxYear.Year == _taxYear.Year);
+    private WorkingTaxCredit WTCDetails() => GetWTCData().Single(wtc => wtc.TaxYear.Year == _taxYear.Year);
+
+    private List<WorkingTaxCredit> GetWTCData()
+    {
+        return new List<WorkingTaxCredit>
+            {
+                new WorkingTaxCredit(new DateTime(2020, 04, 06), 3040.00m, 2045.00m, 825.00m, 6530.00m, 0.41f),
+                new WorkingTaxCredit(new DateTime(2021, 04, 06), 2005.00m, 2060.00m, 830.00m, 6565.00m, 0.41f)
+            };
+    }
+
+    private List<ChildTaxCredit> GetCTCData()
+    {
+        return new List<ChildTaxCredit>
+        {
+            new ChildTaxCredit(new DateTime(2020, 04, 06), 545.00m, 2830.00m, 16385m, 0.41f),
+            new ChildTaxCredit(new DateTime(2021, 04, 06), 545m, 2845m, 16480m, 0.41f)
+        };
+    }
+    private async Task<List<MinWage>> GetMinWageAsync()
+    {
+        return await Task.Run(() => GetMinWageData());
+    }
+    private List<MinWage> GetMinWageData()
+    {
+        return new List<MinWage>
+        {
+            new MinWage(0, new DateTime(2020, 04, 06), 4.55m),
+            new MinWage(18, new DateTime(2020 ,04, 06), 6.45m),
+            new MinWage(21, new DateTime(2020, 04, 06), 8.20m),
+            new MinWage(25, new DateTime(2020, 04, 06), 8.72m),
+            new MinWage(0, new DateTime(2021, 04, 06), 4.62m),
+            new MinWage(18, new DateTime(2021, 04, 06), 6.56m),
+            new MinWage(21, new DateTime(2021, 04, 06), 8.36m),
+            new MinWage(25, new DateTime(2021, 04, 06), 8.91m)
+        };
+
+        
+    }
+
 }

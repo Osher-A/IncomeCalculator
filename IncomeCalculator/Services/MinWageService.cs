@@ -3,29 +3,31 @@ using IncomeCalculator.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IncomeCalculator.Services
 {
-    public class MinWageService
+    public class MinWageService 
     {
-        private MinWagePersistence _minWageRepository;
+        private IMinWageRepository _minWageRepository;
         public List<MinWage> MinWages { get; set; }
-        public MinWageService(MinWagePersistence minWageRepository)
+        public MinWageService(IMinWageRepository minWageRepository)
         {
             _minWageRepository = minWageRepository;
-            SetMinWages();
         }
 
-        public MinWage GetMinWage(int age, DateTime taxYear)
+        public async Task<MinWage> GetMinWage(int age, DateTime taxYear)
         {
-            return MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
+             SetMinWages();
+
+            return await Task.Run(() => MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
                 .OrderByDescending(mw => mw.Wage)
-                .First();
+                .First());
         }
 
-        private async void SetMinWages()
+        private void SetMinWages()
         {
-            MinWages = await _minWageRepository.GetMinWagesAsync();
+            MinWages = _minWageRepository.GetMinWages();
         }
     }
 }

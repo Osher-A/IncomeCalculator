@@ -7,36 +7,36 @@ using System.Threading.Tasks;
 
 namespace IncomeCalculator.DAL
 {
-    public class MinWagePersistence
+    public class MinWageRepository : IMinWageRepository
     {
         private BenefitsContext _dbContext;
-        public MinWagePersistence(BenefitsContext dbContext)
+        public MinWageRepository(BenefitsContext dbContext)
         {
             _dbContext = dbContext;
         }
+        public MinWageRepository() { }
 
-        public async Task<List<MinWage>> GetMinWagesAsync()
+        public List<MinWage> GetMinWages()
         {
             try
             {
-                var result = await _dbContext.MinWages
+                var result = _dbContext.MinWages
                     .OrderBy(mw => mw.TaxYear)
-                    .OrderByDescending(mw => mw.Age).ToListAsync();
+                    .OrderByDescending(mw => mw.Age).ToList();
                 return result;
             }
             catch (NullReferenceException)
             {
-                //Console.WriteLine("Sorry there doesn't exist any information for the min wage of your selection!");
+                throw new Exception("Sorry there doesn't exist any information for the min wage of your selection!");
             }
             catch (InvalidOperationException ex)
             {
-                //Console.WriteLine("Please check your Database connection, and try again");
+                throw new Exception("Please check your Database connection, and try again");
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.Message);
+                throw new Exception(ex.Message);
             }
-            return null;
         }
     }
 }

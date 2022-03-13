@@ -10,5 +10,16 @@ namespace IncomeCalculator.Data
         public decimal ChildElement { get; set; }
         public decimal Threshold { get; set; }
         public float WithdrawalRate { get; set; }
+
+        public ChildTaxCredit() { }
+        public ChildTaxCredit(DateTime taxYear, decimal familyElement, decimal childElement,
+            decimal threshold, float withdrawalRate)
+        {
+            TaxYear = taxYear;
+            FamilyElement = familyElement;
+            ChildElement = childElement;
+            Threshold = threshold;
+            WithdrawalRate = withdrawalRate;
+        }
     }
 }

@@ -1,12 +1,15 @@
 using BlazorStyled;
+using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using IncomeCalculator.Models;
+using IncomeCalculator.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.JSInterop;
 using Radzen;
 using Syncfusion.Blazor;
 
@@ -37,11 +40,11 @@ namespace IncomeCalculator
 
             services.AddDbContext<BenefitsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSingleton<WorkDetails>();
+            services.AddScoped<WorkDetails>();
             services.AddSingleton<FinancialDetails>();
-
-
-
+            services.AddSingleton<IMessageService, MessageService>();
+            services.AddScoped<IMinWageRepository, MinWageRepository>();
+            services.AddScoped<ITaxCreditsRepository, TaxCreditsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

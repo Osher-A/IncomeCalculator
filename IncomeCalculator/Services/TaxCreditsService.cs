@@ -8,9 +8,9 @@ using System;
 namespace IncomeCalculator.Services
 {
 
-    public class TaxCreditsService
+    public class TaxCreditsService 
     {
-        private TaxCreditsPersistence _tcPersistence;
+        private ITaxCreditsRepository _tcRepository;
         private FinancialDetails _financialDetails;
         private ChildTaxCredit _ctcDetails;
         private WorkingTaxCredit _wtcDetails;
@@ -18,22 +18,13 @@ namespace IncomeCalculator.Services
         private int _numberOfParents;
         private decimal _wtcThreshold;
         private decimal _ctcThreshold;
-        public TaxCreditsService(FinancialDetails financialDetails)
+        public TaxCreditsService(FinancialDetails financialDetails, ITaxCreditsRepository tcRepository)
         {
-           _financialDetails = financialDetails;
-          _tcPersistence = new TaxCreditsPersistence(new BenefitsContext(), _financialDetails.TaxYear);
+            _financialDetails = financialDetails;
+            _tcRepository = tcRepository;
+            _tcRepository.TaxYear = _financialDetails.TaxYear;
             _numberOfParents = (financialDetails.SingleParent) ? 1 : 2;
-            try
-            {
-                _wtcDetails = _tcPersistence.WTCDetails();
-                _ctcDetails = _tcPersistence.CTCDetails();
-                _wtcThreshold = _wtcDetails.Threshold * _numberOfParents;
-                _ctcThreshold = _ctcDetails.Threshold * _numberOfParents;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            SetUpData();
         }
         public (decimal, string) GetTaxCreditsTotal()
         {
@@ -61,13 +52,13 @@ namespace IncomeCalculator.Services
         private decimal WTCEntitlement()
         {
             decimal parent1HoursPW = _financialDetails.Parent1WorkDetails.HoursPW;
-            decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null)? _financialDetails.Parent2WorkDetails.HoursPW: 0;
+            decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null) ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
             if (WTC() < 0)
                 _message = "You are not entitled to Working Tax Credit, one parent has to be working at least 16 hrs pw, and for two parent's it's also required that both parents work a min of 24 hours pw combined";
             return WTC();
         }
         private decimal WTC()
-		{
+        {
             decimal parent1HoursPW = _financialDetails.Parent1WorkDetails.HoursPW;
             decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null) ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
             if (_financialDetails.SingleParent)
@@ -78,13 +69,13 @@ namespace IncomeCalculator.Services
                     return _wtcDetails.BasicElement;
             }
             else
-			{
-              if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
-                if (parent1HoursPW + parent2HoursPW >= 30)
-                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult + _wtcDetails.ThirtyHourElement;
-                else if (parent1HoursPW + parent2HoursPW >= 24)
-                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult;
-			}
+            {
+                if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
+                    if (parent1HoursPW + parent2HoursPW >= 30)
+                        return _wtcDetails.BasicElement + _wtcDetails.SecondAdult + _wtcDetails.ThirtyHourElement;
+                    else if (parent1HoursPW + parent2HoursPW >= 24)
+                        return _wtcDetails.BasicElement + _wtcDetails.SecondAdult;
+            }
             return 0;
         }
 
@@ -105,7 +96,7 @@ namespace IncomeCalculator.Services
             else if (totalIncome > _ctcThreshold)
                 overThreshold = CtcOverThreshold(totalIncome);
 
-            
+
             return overThreshold;
         }
 
@@ -129,8 +120,23 @@ namespace IncomeCalculator.Services
                 _message = "You need to have at least one child to be entitled for tax credits!";
                 return 0;
             }
-           else
-               return totalCredits;
+            else
+                return totalCredits;
+        }
+
+        private void SetUpData()
+        {
+            try
+            {
+                _wtcDetails = _tcRepository.WTCDetails();
+                _ctcDetails = _tcRepository.CTCDetails();
+                _wtcThreshold = _wtcDetails.Threshold * _numberOfParents;
+                _ctcThreshold = _ctcDetails.Threshold * _numberOfParents;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

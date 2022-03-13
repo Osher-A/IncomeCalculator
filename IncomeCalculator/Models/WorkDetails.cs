@@ -1,4 +1,5 @@
 ﻿using BootstrapBlazor.Components;
+using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using IncomeCalculator.Services;
 using System;
@@ -37,9 +38,9 @@ namespace IncomeCalculator.Models
             set => _hourlyRate = value;
         }
 
-        public WorkDetails()
+        public WorkDetails(IMinWageRepository minWageRepository)
         {
-            _minWageService = new MinWageService(new DAL.MinWagePersistence(new BenefitsContext()));
+            _minWageService = new MinWageService(minWageRepository);
         }
 
         private decimal GetTotal()
@@ -58,11 +59,11 @@ namespace IncomeCalculator.Models
             }
         }
 
-        private void GetMinWage()
+        private async void GetMinWage()
         {
             try
             {
-                var minwage = _minWageService.GetMinWage(Age, TaxYear);
+                var minwage = await _minWageService.GetMinWage(Age, TaxYear);
                 _hourlyRate = minwage.Wage.ToString();
             }
             catch (Exception) { }
