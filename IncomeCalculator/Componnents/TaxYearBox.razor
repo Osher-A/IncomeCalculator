@@ -1,8 +1,7 @@
-﻿<div class="row mb-4" style="display: @Display" >
-		<div class="col-5 text-right">
+﻿		<div style="display: @Display; grid-column: 1 / 2 ;" class=" text-right">
 			<label for="year" class="form-label">Tax Year</label>
 		</div>
-		<div class="col-3">
+		<div style="display:@Display; grid-column: 2 / 3;">
 			<EditForm Model=TaxYear>
 			<InputSelect id="year" class="form-control border-3 border-dark"  @bind-Value="TaxYear" @onmouseleave="ChangeParentDate">
 				<option value ="@(new DateTime(2020, 04, 06))">2020-2021</option>
@@ -13,7 +12,6 @@
 			</InputSelect>
 			</EditForm>
 		</div>
-	</div>
 
 @code {
 	[Parameter]

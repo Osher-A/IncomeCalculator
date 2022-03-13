@@ -1,6 +1,9 @@
 ﻿@page "/result"
 @inject FinancialDetails Fd;
 @inject IJSRuntime JsRuntime;
+@inject IMessageService MessageService;
+@inject ITaxCreditsRepository TaxCreditsRepo;
+@using IncomeCalculator.Services;
 @using Microsoft.JSInterop;
 
 <style>
@@ -37,7 +40,7 @@
         <label>@Parent weekly income</label>
     </div>
     <div class="col-6 ">
-        <input type="text" class="rounded" readonly Value="@String.Format("{0:C}" ,Parent1WeeklyIncome)"/>
+        <input type="text" id="parent1WeeklyIncome" class="rounded" readonly Value="@String.Format("{0:C}" ,Parent1WeeklyIncome)"/>
     </div>
 </div>
 
@@ -55,7 +58,7 @@
         <label>Total yearly income</label>
     </div>
     <div class="col-6 ">
-        <input type="text" class="rounded" readonly value="@String.Format("{0:C}", Fd.CombindedIncome)" />
+        <input type="text" id="yearlyIncome" class="rounded" readonly value="@String.Format("{0:C}", Fd.CombindedIncome)" />
     </div>
 </div>
 
@@ -64,7 +67,7 @@
         <label style="font-size: 2em; line-height:normal;" class="header" >Total yearly credits:</label>
     </div>
     <div class="col-6 ">
-        <input type="text" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="@String.Format("{0:C}", Total)"/>
+        <input type="text" id="results" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="@String.Format("{0:C}", Total)"/>
     </div>
 </div>
 </EditForm>
@@ -76,8 +79,7 @@
     public decimal Parent1WeeklyIncome { get; private set; }
     public decimal Parent2WeeklyIncome { get; private set; }
     public string Parent { get; private set; }
-    public string Display { get; private set; } 
-
+    public string Display { get; private set; }
     protected async override void OnInitialized()
     {
         if(Fd.SingleParent)
@@ -96,14 +98,14 @@
 
         try
         {
-            var taxCreditService = new TaxCreditsService(Fd);
+            var taxCreditService = new TaxCreditsService(Fd, TaxCreditsRepo);
             var results = taxCreditService.GetTaxCreditsTotal();
             Total = results.Item1;
             AlertUser(results.Item2);
         }
         catch (Exception ex)
         {
-            await  TostrAlert("error", ex.Message);
+            await  MessageService.TostrAlert(JsRuntime,"error", ex.Message);
         }
 
     }
@@ -111,9 +113,9 @@
     private async void AlertUser(string message)
     {
         if (String.IsNullOrWhiteSpace(message))
-            await TostrAlert("success", "Task completed successfully!");
+            await MessageService.TostrAlert(JsRuntime, "success", "Task completed successfully!");
         else
-            await SweetAlert("Information", message);
+            await MessageService.SweetAlert(JsRuntime, "Information", message);
     }
 
     private async Task TostrAlert(string type, string message)

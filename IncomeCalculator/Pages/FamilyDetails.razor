@@ -5,35 +5,24 @@
 <h1 class="mb-9 mt-4  text-center header" >Tax Credit's Calculator</h1>
 
 <EditForm Model="@this" class="p-3">
-<div class="row mt-5">
-	<div class="col-5 text-right">
+<div  class="container mt-5">
+	<div style="grid-column: 1 / 2;" class="text-right">
 		<label for="children" class="form-col-form-label ">Single Parent</label>
 	</div>
-	<div class="col-6">
+	<div style="grid-column: 2 / 3;">
 		<InputCheckbox id="parents"  @bind-Value="Fd.SingleParent" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;"/>
 	</div>
-</div>
-<div class="row mt-4">
-	<div class="col-5 text-right">
+	<div style="grid-column: 1 / 2;" class="text-right">
 		<label for="children" class="form-col-form-label ">Children</label>
 	</div>
-	<div class="col-6">
+	<div style="grid-column: 2 / 3;">
 		<InputNumber  id="children" @bind-Value="Fd.ChildrenAmount" class="form-control border-dark"/>
 	</div>
-</div>
-
-<div class=row>
-	<div class="col-6 offset-5 text-left">
+	@*<div class="text-left" style="grid-column: 2 / 3" >
      <text style="font-size: 11px;" > * Only children under 16</text>
-	</div>
-</div>
-
-<div class="row mt-4">
-	<div class="col-12 ">
+	</div>*@
 		<TaxYearBox   ChangeDate=OnChangeDate />
-	</div>
-</div>
-
+		</div>
 <NextPageButton Url="@SetUrl()"/>
 </EditForm>
 

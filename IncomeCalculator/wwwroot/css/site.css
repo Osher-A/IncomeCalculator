@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: lightgray;
 }
 
 a, .btn-link {
@@ -16,8 +17,8 @@ a, .btn-link {
 
 app {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;
+    flex-direction: column;*/
 }
 
 /*.top-row {
@@ -31,7 +32,7 @@ app {
      background-color:  lightgray;
 }
 
-   /* .main .top-row {
+ .main .top-row {
         background-color: #f7f7f7;
         border-bottom: 1px solid #d6d5d5;
         justify-content: flex-end;
@@ -46,7 +47,7 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-*/
+
 .sidebar {
     background-color: darkslategrey;
 }
@@ -138,7 +139,7 @@ app {
     top: 0.5rem;
 }
 
-@media (max-width: 767.98px) {
+/*@media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
         display: none;
     }
@@ -151,8 +152,8 @@ app {
         margin-left: 0;
     }
 }
-
-@media (min-width: 768px) {
+*/
+/*@media (min-width: 768px) {
     app {
         flex-direction: row;
     }
@@ -178,23 +179,12 @@ app {
         display: none;
     }
 
-    .sidebar .collapse {
+    .sidebar .collapse {*/
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        /*display: block;
     }
 
-    .header {
-        -webkit-text-stroke: dashed 1px background: #ffffff;
-        text-shadow: 0px 2px 4px #59adff;
-        text-shadow: inset 0px 1px 3px #686868;
-        color: #2477bf;
-        font-family: 'Segoe UI';
-        font-size: 3em;
-        font-weight: 400;
-        line-height: 112px;
-        letter-spacing: -1.5px;
-    }
-
+   
     .form-control {
         width: 12em;
         height: 2.5em;
@@ -203,4 +193,31 @@ app {
     label{
         font-size: 1.5em;
     }
+}*/
+
+.header {
+    -webkit-text-stroke: dashed 1px background: #ffffff;
+    text-shadow: 0px 2px 4px #59adff;
+    text-shadow: inset 0px 1px 3px #686868;
+    color: #2477bf;
+    font-family: 'Segoe UI';
+    font-size: 3em;
+    font-weight: 400;
+    line-height: 112px;
+    letter-spacing: -1.5px;
 }
+
+.form-control {
+    width: 12em;
+    height: 2.5em;
+}
+
+    .container {
+    display: grid;
+    grid-template-columns: 310px 310px;
+    grid-template-rows: auto;
+    column-gap: 20px;
+    row-gap:20px;
+    justify-content:center;
+}
+

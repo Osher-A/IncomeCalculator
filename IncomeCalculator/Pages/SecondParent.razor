@@ -3,7 +3,9 @@
 
 @inject WorkDetails Parent1WD;
 @inject FinancialDetails Fd;
+@inject IMinWageRepository MinWageRepo;
 @inject NavigationManager _navigator;
+
 
 <EditForm Model=Fd OnValidSubmit=Submit>
 <CascadingValue Value="true" >
@@ -20,7 +22,7 @@
 	protected override void OnInitialized()
 	{
 		//Fd.ChildrenAmount = Convert.ToInt32(Children);
-		Fd.Parent2WorkDetails = new WorkDetails () {Period = Period.Year};
+		Fd.Parent2WorkDetails = new WorkDetails(MinWageRepo) {Period = Period.Year};
 		Fd.Parent2WorkDetails.TaxYear = Fd.TaxYear;
 	}
 

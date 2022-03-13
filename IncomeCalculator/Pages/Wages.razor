@@ -1,4 +1,5 @@
 ﻿@page "/wages"
+@inject IMinWageRepository MinWageRepo
 
 <style>
 	
@@ -13,20 +14,20 @@
 	}
 
 </style>
-
 <PageTitle >Wages Calculator</PageTitle>
+
 <h1 class="mb-9  text-center header" >Wages Calculator</h1>
 
+<div style="width:100%; display:grid; grid-template-columns: 700px; justify-content: center;">
+	<div>
 <EditForm Model="@WdModel" class="p-3 ml-1 mr-5" style=" margin-top: 3%">
-
 <DataAnnotationsValidator/>
 <WorkInfo ChangeDetails=OnDetailsChange ChangeDate=OnChangeDate></WorkInfo>
-
-<div class="row mb-5 ">
-	<div class="col-5 text-right">
+<div style="margin-top: 20px;" class="container">
+	<div style="grid-column: 1 / 2;" class="text-right">
 			<label class="form-label">Period to calculate</label>
 	</div>
-	<div class="col-6  align-self-center" id="radioButton">
+	<div class="p-1" style="grid-column: 2/ 3;" id="radioButton">
 		<InputRadioGroup  @bind-Value="WdModel.Period" class="form-control" >
 			@foreach (var period in (Period[])Enum.GetValues(typeof(Period)))
 			{
@@ -35,14 +36,13 @@
 			}
         </InputRadioGroup>
      </div>
-</div>
- <div class="row ">
-  <div class="col-12">
-   <h2 class="text-center" style="display: @TotalDisplay">@string.Format("Total per {0}: {1:C}",WdModel.Period.ToString(),WdModel.Total)</h2>
-  </div>
+  <div style="grid-column: 1 / 3">
+   <h2 class="text-center ml-5" style="display: @TotalDisplay;">@string.Format("Total per {0}: {1:C}",WdModel.Period.ToString(),WdModel.Total)</h2>
  </div>
-
+	 </div>
 </EditForm>
+</div>
+</div>
 
 @code{
 	public WorkDetails WdModel { get; private set; }
@@ -60,7 +60,7 @@
 
 	protected override void OnInitialized()
 	{
-		WdModel = new WorkDetails();
+		WdModel = new WorkDetails(MinWageRepo);
 	}
 
 
