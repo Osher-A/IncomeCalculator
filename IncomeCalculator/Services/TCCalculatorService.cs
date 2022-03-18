@@ -1,6 +1,6 @@
 ﻿using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
-using IncomeCalculator.Models;
+using IncomeCalculator.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -8,7 +8,7 @@ using System;
 namespace IncomeCalculator.Services
 {
 
-    public class TaxCreditsService 
+    public class TCCalculatorService 
     {
         private ITaxCreditsRepository _tcRepository;
         private FinancialDetails _financialDetails;
@@ -18,7 +18,7 @@ namespace IncomeCalculator.Services
         private int _numberOfParents;
         private decimal _wtcThreshold;
         private decimal _ctcThreshold;
-        public TaxCreditsService(FinancialDetails financialDetails, ITaxCreditsRepository tcRepository)
+        public TCCalculatorService(FinancialDetails financialDetails, ITaxCreditsRepository tcRepository)
         {
             _financialDetails = financialDetails;
             _tcRepository = tcRepository;

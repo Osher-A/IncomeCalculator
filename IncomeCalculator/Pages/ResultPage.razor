@@ -1,10 +1,12 @@
 ﻿@page "/result"
+
 @inject FinancialDetails Fd;
-@inject IJSRuntime JsRuntime;
 @inject IMessageService MessageService;
 @inject ITaxCreditsRepository TaxCreditsRepo;
 @using IncomeCalculator.Services;
 @using Microsoft.JSInterop;
+@using IncomeCalculator.ViewModels;
+@using IncomeCalculator.Enums;
 
 <style>
     input {
@@ -98,14 +100,14 @@
 
         try
         {
-            var taxCreditService = new TaxCreditsService(Fd, TaxCreditsRepo);
+            var taxCreditService = new TCCalculatorService(Fd, TaxCreditsRepo);
             var results = taxCreditService.GetTaxCreditsTotal();
             Total = results.Item1;
             AlertUser(results.Item2);
         }
         catch (Exception ex)
         {
-            await  MessageService.TostrAlert(JsRuntime,"error", ex.Message);
+            await  MessageService.TostrAlert(MessageType.Error, ex.Message);
         }
 
     }
@@ -113,19 +115,9 @@
     private async void AlertUser(string message)
     {
         if (String.IsNullOrWhiteSpace(message))
-            await MessageService.TostrAlert(JsRuntime, "success", "Task completed successfully!");
+            await MessageService.TostrAlert(MessageType.Success, "Task completed successfully!");
         else
-            await MessageService.SweetAlert(JsRuntime, "Information", message);
-    }
-
-    private async Task TostrAlert(string type, string message)
-    {
-        await JsRuntime.InvokeVoidAsync("ShowToastr", type , message);
-    }
-
-    private async Task SweetAlert(string heading, string message)
-    {
-        await JsRuntime.InvokeVoidAsync("ShowSwal", heading, message);
+            await MessageService.SweetAlert("Information", message);
     }
 
 }

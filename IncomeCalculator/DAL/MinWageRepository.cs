@@ -1,4 +1,6 @@
-﻿using IncomeCalculator.Data;
+﻿using AutoMapper;
+using IncomeCalculator.Data;
+using IncomeCalculator.Helper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,11 @@ namespace IncomeCalculator.DAL
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public void AddMinWage(Data.MinWage minWage)
+        {
+            _dbContext.Add(minWage);
+            _dbContext.SaveChanges(); 
         }
     }
 }

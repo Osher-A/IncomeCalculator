@@ -1,9 +1,9 @@
 ﻿@using IncomeCalculator.Componnents
-@using IncomeCalculator.Data
-@using IncomeCalculator.Models
+@using IncomeCalculator.ViewModels
 @using IncomeCalculator.Pages
 @using IncomeCalculator.Services
 @using IncomeCalculator.DAL
+@using IncomeCalculator.Data
 @using Moq;
 @inherits BunitTestContext
 @code {
@@ -23,9 +23,12 @@
 
         Services.AddSingleton<IMessageService>(_messageService.Object);
         Services.AddSingleton<IMinWageRepository>(_minWageRepo.Object);
+        Services.AddSingleton<MinWageService>();
         Services.AddSingleton<WorkDetails>();
         Services.AddSingleton<ITaxCreditsRepository>(_tCRepo.Object);
         Services.AddSingleton<FinancialDetails>();
+        Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
     }
 
     [Test]

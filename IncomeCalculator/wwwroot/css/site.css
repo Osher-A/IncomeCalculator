@@ -5,6 +5,10 @@ html, body {
     background-color: lightgray;
 }
 
+label {
+    font-size: 1.5em;
+}
+
 a, .btn-link {
     color: #0366d6;
 }

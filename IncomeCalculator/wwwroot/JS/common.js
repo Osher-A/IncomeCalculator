@@ -1,9 +1,9 @@
 ﻿window.ShowToastr = (type, message) => {
-    if (type === "success") {
+    if (type === "Success") {
         toastr.success(message, 'Success!', { timeOut: 5000 });
     }
 
-    if (type === "error") {
+    if (type === "Error") {
         toastr.error(message, 'Error!', { timeOut: 5000 });
     }
 

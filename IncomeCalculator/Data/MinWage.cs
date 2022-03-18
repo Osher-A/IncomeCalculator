@@ -10,7 +10,6 @@ namespace IncomeCalculator.Data
         public int Id { get; set; }
         public int Age { get; set; }
         public DateTime TaxYear { get; set; } = DateTime.Now;
-        [Required]
         public decimal Wage { get; set; }
 
         public MinWage() { }

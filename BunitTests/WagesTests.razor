@@ -2,6 +2,7 @@
 @using IncomeCalculator.Data
 @using IncomeCalculator.Pages
 @using IncomeCalculator.DAL
+@using IncomeCalculator.Services
 @using Moq
 
 @inherits BunitTestContext
@@ -18,6 +19,9 @@
         _minWageRepo = new Mock<IMinWageRepository>();
         _minWageRepo.Setup(mw => mw.GetMinWages()).Returns(GetMinWageData());
         Services.AddSingleton<IMinWageRepository>(_minWageRepo.Object);
+        Services.AddSingleton<MinWageService>();
+        Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         _cut = Render( 
     @<Wages/>);
         _workInfoComponent = _cut.FindComponent<WorkInfo>();

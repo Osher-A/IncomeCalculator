@@ -1,4 +1,4 @@
-﻿using IncomeCalculator.Models;
+﻿using IncomeCalculator.ViewModels;
 using System;
 
 namespace IncomeCalculator.Data

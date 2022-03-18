@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace IncomeCalculator.Models
+namespace IncomeCalculator.ViewModels
 {
     public class WorkDetails
     {
@@ -18,7 +18,7 @@ namespace IncomeCalculator.Models
         [Range(1, 168)]
         public decimal HoursPW { get; set; }
         public bool IsMinWage { get; set; }
-		public DateTime TaxYear { get; set; }
+        public DateTime TaxYear { get; set; }
         [Required]
         public Period Period { get; set; }
         public decimal Total { get { return GetTotal(); } set { } }
@@ -29,7 +29,7 @@ namespace IncomeCalculator.Models
                 if (IsMinWage && HoursPW >= 1)
                     GetMinWage();
                 decimal rate;
-                var parseAble = decimal.TryParse(_hourlyRate, System.Globalization.NumberStyles.Currency, CultureInfo.CurrentCulture, out rate);
+                var parseAble = decimal.TryParse(_hourlyRate, NumberStyles.Currency, CultureInfo.CurrentCulture, out rate);
                 if (parseAble)
                     return rate.ToString("C");
                 else
@@ -38,15 +38,16 @@ namespace IncomeCalculator.Models
             set => _hourlyRate = value;
         }
 
-        public WorkDetails(IMinWageRepository minWageRepository)
+        public WorkDetails(MinWageService minWageService) 
         {
-            _minWageService = new MinWageService(minWageRepository);
+            _minWageService = minWageService;
         }
+        
 
         private decimal GetTotal()
         {
             decimal hourlyRate = decimal.Parse(HourlyRate, NumberStyles.Currency);
-           
+
             var weeklyWage = HoursPW * hourlyRate;
             switch (Period)
             {

@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using IncomeCalculator.Enums;
+using Microsoft.JSInterop;
+using System.Threading.Tasks;
 
 namespace IncomeCalculator.Services
 {
     public interface IMessageService
     {
-        Task TostrAlert(object jsRuntime, string type, string message); 
-        Task SweetAlert(object jsRuntime, string heading, string message);
+        Task TostrAlert(MessageType type, string message); 
+        Task SweetAlert(string heading, string message);
     }
 }

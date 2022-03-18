@@ -2,6 +2,7 @@
 @page "/second-parent"
 
 @inject WorkDetails Parent1WD;
+@inject MinWageService MWService;
 @inject FinancialDetails Fd;
 @inject IMinWageRepository MinWageRepo;
 @inject NavigationManager _navigator;
@@ -22,7 +23,7 @@
 	protected override void OnInitialized()
 	{
 		//Fd.ChildrenAmount = Convert.ToInt32(Children);
-		Fd.Parent2WorkDetails = new WorkDetails(MinWageRepo) {Period = Period.Year};
+		Fd.Parent2WorkDetails = new WorkDetails(MWService) {Period = Period.Year};
 		Fd.Parent2WorkDetails.TaxYear = Fd.TaxYear;
 	}
 

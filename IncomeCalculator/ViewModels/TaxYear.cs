@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IncomeCalculator.Models
+namespace IncomeCalculator.ViewModels
 {
     public class TaxYear
     {

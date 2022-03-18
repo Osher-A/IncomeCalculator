@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using IncomeCalculator.Enums;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
@@ -6,15 +7,19 @@ namespace IncomeCalculator.Services
 {
     public  class MessageService : IMessageService
     {
-        public async Task SweetAlert(object jSRuntime, string heading, string message)
+        private IJSRuntime _jsRuntime;
+        public MessageService(IJSRuntime jsRuntime)
         {
-            await ((JSRuntime)jSRuntime).InvokeVoidAsync("ShowSwal", heading, message);
+            _jsRuntime = jsRuntime;
+        }
+        public async Task SweetAlert(string heading, string message)
+        {
+            await _jsRuntime.InvokeVoidAsync("ShowSwal", heading, message);
         }
 
-        public async Task TostrAlert(object jSRuntime, string type, string message)
+        public async Task TostrAlert(MessageType type, string message)
         {
-            JSRuntime js = jSRuntime as JSRuntime;
-            await js.InvokeVoidAsync("ShowToastr", type, message);
+            await _jsRuntime.InvokeVoidAsync("ShowToastr", type.ToString(), message);
         }
        
     }

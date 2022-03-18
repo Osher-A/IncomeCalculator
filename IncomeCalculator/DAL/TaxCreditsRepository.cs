@@ -1,5 +1,6 @@
 ﻿using IncomeCalculator.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,7 @@ namespace IncomeCalculator.DAL
             _benefitsContext = benefitsContext;
         }
         public TaxCreditsRepository() { }
-        public ChildTaxCredit CTCDetails()
+        public ChildTaxCredit CTCDetails()         // Move to services
         {
             try
             {
@@ -29,7 +30,7 @@ namespace IncomeCalculator.DAL
             catch (Exception) { throw; }
         }
 
-        public WorkingTaxCredit WTCDetails()
+        public WorkingTaxCredit WTCDetails()  // Move to services
         {
             try
             {
@@ -40,6 +41,28 @@ namespace IncomeCalculator.DAL
                 throw new Exception("No records found!");
             }
             catch (Exception) { throw; }
+        }
+
+        public List<WorkingTaxCredit> GetAllWTCData()
+        {
+            return _benefitsContext.WorkingTaxCredits.ToList();
+        }
+
+        public List<ChildTaxCredit> GetAllCTCData()
+        {
+            return _benefitsContext.ChildTaxCredits.ToList();
+        }
+
+        public void AddWTCData(WorkingTaxCredit wtc)
+        {
+            _benefitsContext.WorkingTaxCredits.Add(wtc);
+            _benefitsContext.SaveChanges();
+        }
+
+        public void AddCTCData(ChildTaxCredit ctc)
+        {
+            _benefitsContext.ChildTaxCredits.Add(ctc);
+            _benefitsContext.SaveChanges();
         }
     }
 }
