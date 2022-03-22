@@ -5,6 +5,7 @@ using IncomeCalculator.Services;
 using IncomeCalculator.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,9 @@ namespace IncomeCalculator
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<BenefitsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders().AddDefaultUI()
+                .AddEntityFrameworkStores<BenefitsContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<WorkDetails>();
             services.AddSingleton<FinancialDetails>();
             services.AddScoped<MinWageService>();
@@ -70,12 +73,21 @@ namespace IncomeCalculator
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                dbInitializer.Initialize();
+            }
         }
+
     }
 }

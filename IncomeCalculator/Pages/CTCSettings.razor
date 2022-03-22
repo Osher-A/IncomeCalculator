@@ -1,7 +1,10 @@
 ﻿@page "/ctc-settings" 
+@using IncomeCalculator.Enums
 @inject IMessageService MessageService
 @inject IJSRuntime JSRuntime
 @inject TCDataService TCService
+@attribute [Authorize (Roles = "${UserType.Admin.ToString()}")]
+
 <EditForm Model=CTC OnValidSubmit=Submit>
 <DataAnnotationsValidator/>
 <h2 class="mt-5 text-center header">Child tax credit's settings</h2>

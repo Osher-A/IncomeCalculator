@@ -1,6 +1,8 @@
 ﻿@page "/min-wage-settings"
 @inject MinWageService Service;
 @inject IMessageService MessageService;
+@using IncomeCalculator.Enums;
+@attribute [Authorize(Roles = "${UserType.Admin.ToString()}")]
 
 <EditForm Model=MinWage OnValidSubmit=Submit>
 <DataAnnotationsValidator/>

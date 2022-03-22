@@ -9,7 +9,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IncomeCalculator.Data
 {
-    public partial class BenefitsContext 
+    public partial class BenefitsContext : IdentityDbContext
     {
         public BenefitsContext()
         {
@@ -52,6 +52,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             });
 
             OnModelCreatingPartial(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

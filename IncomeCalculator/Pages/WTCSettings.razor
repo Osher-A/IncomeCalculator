@@ -1,6 +1,9 @@
 ﻿@page "/wtc-settings"
+@using IncomeCalculator.Enums
 @inject TCDataService TCService
 @inject IMessageService MessageService
+@attribute [Authorize (Roles = "${UserType.Admin.ToString()}")]
+
 <EditForm Model=WTC OnValidSubmit=Submit>
 <DataAnnotationsValidator/>
 <h2 class="mt-2 text-center header">Working tax credit's settings</h2>
