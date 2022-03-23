@@ -2,7 +2,7 @@
 @inject MinWageService Service;
 @inject IMessageService MessageService;
 @using IncomeCalculator.Enums;
-@attribute [Authorize(Roles = "${UserType.Admin.ToString()}")]
+@attribute [Authorize(Roles = "Admin")]
 
 <EditForm Model=MinWage OnValidSubmit=Submit>
 <DataAnnotationsValidator/>

@@ -3,7 +3,7 @@
 @inject IMessageService MessageService
 @inject IJSRuntime JSRuntime
 @inject TCDataService TCService
-@attribute [Authorize (Roles = "${UserType.Admin.ToString()}")]
+@attribute [Authorize (Roles = "Admin")]
 
 <EditForm Model=CTC OnValidSubmit=Submit>
 <DataAnnotationsValidator/>

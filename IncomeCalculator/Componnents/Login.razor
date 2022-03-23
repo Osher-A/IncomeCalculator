@@ -1,14 +1,28 @@
-﻿<AuthorizeView>
+﻿@inject NavigationManager _navigationManager
+<AuthorizeView>
     <Authorized>
         Hello, @context.User.Identity.Name
         <a class="nav-link" href="Identity/Account/Logout">Logout</a>
     </Authorized>
     <NotAuthorized>
-        <NavLink class="nav-link" href="Identity/Account/Login">Log in</NavLink>
-        <NavLink class="nav-link" href="Identity/Account/Register">Register</NavLink>
+        <a class="nav-link" href=@loginUrl @onmouseover=SetUrl>Log in</a>
+        <a class="nav-link" href=@registerUrl @onmouseover=SetUrl>Register</a>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-
+    private string loginUrl;
+    private string registerUrl;
+    protected void SetUrl()
+    {
+        var uri = new Uri(_navigationManager.Uri);
+        loginUrl = $"identity/account/login?returnUrl={uri.LocalPath}";
+        registerUrl = $"identity/account/register?returnUrl={uri.LocalPath}";
+    }
+     protected override void OnInitialized()
+    {
+        var uri = new Uri(_navigationManager.Uri);
+        loginUrl = $"identity/account/login?returnUrl={uri.LocalPath}";
+        registerUrl = $"identity/account/register?returnUrl={uri.LocalPath}";
+    }
 }

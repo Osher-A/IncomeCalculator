@@ -2,7 +2,7 @@
 @using IncomeCalculator.Enums
 @inject TCDataService TCService
 @inject IMessageService MessageService
-@attribute [Authorize (Roles = "${UserType.Admin.ToString()}")]
+@attribute [Authorize (Roles = "Admin")]
 
 <EditForm Model=WTC OnValidSubmit=Submit>
 <DataAnnotationsValidator/>
