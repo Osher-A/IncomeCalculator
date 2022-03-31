@@ -1,5 +1,4 @@
 ﻿@page "/ctc-settings" 
-@using IncomeCalculator.Enums
 @inject IMessageService MessageService
 @inject IJSRuntime JSRuntime
 @inject TCDataService TCService
@@ -40,13 +39,13 @@
 </EditForm>
 
 @code {
-    public DTO.ChildTaxCredit CTC { get; set; } = new DTO.ChildTaxCredit();
+    public Shared.DTO.ChildTaxCredit CTC { get; set; } = new Shared.DTO.ChildTaxCredit();
     public async void Submit()
     {
         if(TCService.CanAddCTCData(CTC))
-          await MessageService.TostrAlert(Enums.MessageType.Success, "Operation Successful!");
+          await MessageService.TostrAlert(MessageType.Success, "Operation Successful!");
 
-        CTC = new DTO.ChildTaxCredit();
+        CTC = new Shared.DTO.ChildTaxCredit();
     }
 
 }

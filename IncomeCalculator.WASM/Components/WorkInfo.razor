@@ -1,0 +1,85 @@
+﻿@inject IMinWageService MinWageService;
+<EditForm Model=WdModel>
+<DataAnnotationsValidator/>
+<div class="container">
+		<div style="grid-column: 1 / 2;" class="text-right">
+			<label for="minWage" class="form-label">Min Wage</label>
+		</div>
+		<div style="grid-column: 2 / 3;">
+			<InputCheckbox id="checkBox" name="minWage" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;" @bind-Value="WdModel.IsMinWage" ></InputCheckbox>
+		</div>
+
+		<div style="grid-column: 1 / 2;" class="text-right">
+			<label for="hours" class="form-label">Hours per week</label>
+		</div>
+		<div style="grid-column: 2 / 3;">
+			<input type="number" id="hours" @bind-value="WdModel.HoursPW" @bind-value:event="oninput" class="form-control border-dark" @onmouseleave=OnDetailsChanged/>
+            <ValidationMessage For="@(() => WdModel.HoursPW)"/>
+		</div>
+
+		<div style="grid-column: 1 / 2;" class="text-right">
+			<label for="rate" class="form-label">Hourly rate</label>
+		</div>
+		<div style="grid-column: 2 / 3;">
+			<input type="text" id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-value="@WdModel.HourlyRate" @bind-value:event="oninput"  @onmouseleave=OnDetailsChanged/>
+		</div>
+
+   <TaxYearBox  Display="@DisplayTaxYearBox" ChangeDate=OnChangeDate/>
+
+   
+		<div id="ageRow" style="display: @Display; grid-column: 1 / 2;" class="text-right"> 
+			<label for="age" class="form-label">Age</label>
+		</div>
+		<div style="display:@Display; grid-column: 2 / 3;">
+			<input type="number" id="age" @bind-value="WdModel.Age" @bind-value:event="oninput" class="form-control border-dark " />
+			<ValidationMessage For="@(() => WdModel.Age)"/>
+		</div>
+	</div>
+    </EditForm>
+
+	@code{
+    public WorkDetails WdModel { get; set; }
+    public string Display
+    {
+        get
+        {
+            if (WdModel.IsMinWage)
+                return "normal";
+            else
+                return "none";
+        }
+    }
+
+    public string DisplayTaxYearBox
+    {
+        get
+        {
+            if (IsTaxCalculator || !WdModel.IsMinWage)
+                return "none";
+            else
+                return "normal";
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        WdModel = new WorkDetails(MinWageService);
+        WdModel.TaxYear = new DateTime(2020, 04, 06);
+    }
+    protected override void OnParametersSet()
+    {
+        StateHasChanged();
+    }
+    [CascadingParameter]
+    public bool IsTaxCalculator { get; set; }
+    [Parameter]
+    public Action<DateTime> ChangeDate { get; set; }
+    [Parameter]
+    public Action<WorkDetails> ChangeDetails { get; set; }
+
+    private void OnChangeDate(DateTime date) => ChangeDate?.Invoke(date);
+
+    private void OnDetailsChanged(EventArgs e) => ChangeDetails?.Invoke(WdModel);
+
+}
+

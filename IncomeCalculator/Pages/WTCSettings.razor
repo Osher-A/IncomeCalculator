@@ -1,5 +1,4 @@
 ﻿@page "/wtc-settings"
-@using IncomeCalculator.Enums
 @inject TCDataService TCService
 @inject IMessageService MessageService
 @attribute [Authorize (Roles = "Admin")]
@@ -42,13 +41,13 @@
 </EditForm>
 
 @code {
-    public DTO.WorkingTaxCredit WTC { get; set; } = new DTO.WorkingTaxCredit();
+    public Shared.DTO.WorkingTaxCredit WTC { get; set; } = new Shared.DTO.WorkingTaxCredit();
     public async void Submit()
     {
         if(TCService.CanAddWTCData(WTC))
-           await MessageService.TostrAlert(Enums.MessageType.Success, "Operation Successful!");
+           await MessageService.TostrAlert(MessageType.Success, "Operation Successful!");
 
-        WTC = new DTO.WorkingTaxCredit();
+        WTC = new Shared.DTO.WorkingTaxCredit();
     }
 
 }

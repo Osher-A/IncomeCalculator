@@ -1,7 +1,6 @@
 ﻿@page "/min-wage-settings"
 @inject MinWageService Service;
 @inject IMessageService MessageService;
-@using IncomeCalculator.Enums;
 @attribute [Authorize(Roles = "Admin")]
 
 <EditForm Model=MinWage OnValidSubmit=Submit>
@@ -32,14 +31,14 @@
 </EditForm>
 
 @code {
-    public DTO.MinWage MinWage = new DTO.MinWage();
+    public Shared.DTO.MinWage MinWage = new Shared.DTO.MinWage();
 
     public async void Submit()
     {
         if(Service.CanAddMinWage(MinWage));
-        await MessageService.TostrAlert(Enums.MessageType.Success, "Operation successful!");
+        await MessageService.TostrAlert(MessageType.Success, "Operation successful!");
 
-        MinWage = new DTO.MinWage();
+        MinWage = new Shared.DTO.MinWage();
     }
 
 }

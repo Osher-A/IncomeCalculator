@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
+using IncomeCalculator.Shared;
 namespace IncomeCalculator.Helper
 {
     public class DTOConverter : Profile
     {
         public DTOConverter()
         {
-            CreateMap<DTO.MinWage, Data.MinWage>().ReverseMap();
-            CreateMap<DTO.WorkingTaxCredit, Data.WorkingTaxCredit>().ReverseMap();
-            CreateMap<DTO.ChildTaxCredit, Data.ChildTaxCredit>().ReverseMap();
+            CreateMap<Shared.DTO.MinWage, Data.MinWage>().ReverseMap();
+            CreateMap<Shared.DTO.WorkingTaxCredit, Data.WorkingTaxCredit>().ReverseMap();
+            CreateMap<Shared.DTO.ChildTaxCredit, Data.ChildTaxCredit>().ReverseMap();
         }
     }
 }

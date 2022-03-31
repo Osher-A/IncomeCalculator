@@ -3,6 +3,7 @@
 @using IncomeCalculator.Pages
 @using IncomeCalculator.DAL
 @using IncomeCalculator.Services
+@using IncomeCalculator.Shared.Interfaces
 @using Moq
 
 @inherits BunitTestContext
@@ -20,6 +21,7 @@
         _minWageRepo.Setup(mw => mw.GetMinWages()).Returns(GetMinWageData());
         Services.AddSingleton<IMinWageRepository>(_minWageRepo.Object);
         Services.AddSingleton<MinWageService>();
+        Services.AddSingleton<IMessageService, MessageService>();
         Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         _cut = Render( 
