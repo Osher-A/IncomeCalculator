@@ -36,6 +36,7 @@ namespace IncomeCalculator.WASM.ViewModel
         {
             _minWageService = minWageService;
         }
+        public WorkDetails() { }
 
         public async Task<decimal> Total()
         {

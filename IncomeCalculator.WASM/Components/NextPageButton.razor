@@ -1,0 +1,15 @@
+﻿<div class="col offset-9 mt-5">
+	<button >
+	<NavLink class="nav-link " href="@Url" @onclick=Navigation >@Text &nbsp;  <span class="oi oi-arrow-thick-right" ></span></NavLink> 
+	</button>
+</div>
+
+@code{
+	[Parameter]
+	public string Text { get; set; } = "Next";
+	[Parameter]
+	public string Url { get; set; }
+	[Parameter]
+	public EventCallback Navigation { get; set; } 
+
+}

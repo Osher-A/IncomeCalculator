@@ -27,11 +27,24 @@ namespace IncomeCalculator.Services
 
         public async Task<Shared.DTO.MinWage> GetMinWage(int age, DateTime taxYear)
         {
-            return await Task.Run(() => MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
-                .OrderByDescending(mw => mw.Wage)
-                .First());
+            try
+            {
+                return await Task.Run(() => MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
+                        .OrderByDescending(mw => mw.Wage)
+                        .First());
+            }
+            catch (ArgumentNullException ex)
+            {
+                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, "There doesn't seem to be any data for your query!");
+                return new Shared.DTO.MinWage { Wage = 0 };
+            }
+            catch (Exception ex)
+            {
+                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, ex.Message);
+                return new Shared.DTO.MinWage { Wage = 0 };
+            }
         }
-        public bool CanAddMinWage(Shared.DTO.MinWage dtoMinWage)
+        public async Task<bool> CanAddMinWage(Shared.DTO.MinWage dtoMinWage)
         {
             var existing = MinWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
             if (!existing)
@@ -43,7 +56,7 @@ namespace IncomeCalculator.Services
                 return true;
             }
             else
-                _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
+                await  _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
             return false;
         }
 

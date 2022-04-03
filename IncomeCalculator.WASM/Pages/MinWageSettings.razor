@@ -1,5 +1,5 @@
 ﻿@page "/min-wage-settings"
-@inject MinWageService Service;
+@inject IMinWageService Service;
 @inject IMessageService MessageService;
 @attribute [Authorize(Roles = "Admin")]
 
@@ -7,7 +7,7 @@
 <DataAnnotationsValidator/>
 <h2 class="mt-5 text-center header">Min wage's settings</h2>
 <div style="width: 50%; height: 20%; margin: 3% auto auto auto;">
-    <table  class="table table-bordered border-2 border-secondary" >
+    <table  class="table table-bordered border-2  border-secondary" >
   <tbody>
     <tr>
       <th scope="row">Tax Year</th>
@@ -31,14 +31,14 @@
 </EditForm>
 
 @code {
-    public Shared.DTO.MinWage MinWage = new Shared.DTO.MinWage();
+    public MinWage MinWage = new MinWage();
 
     public async void Submit()
     {
-        if(await Service.CanAddMinWage(MinWage));
+        if(await Service.CanAddMinWage(MinWage))
         await MessageService.TostrAlert(MessageType.Success, "Operation successful!");
 
-        MinWage = new Shared.DTO.MinWage();
+        MinWage = new MinWage();
     }
 
 }

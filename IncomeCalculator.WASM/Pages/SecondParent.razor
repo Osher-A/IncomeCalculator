@@ -1,0 +1,40 @@
+﻿@page "/second-parent/{Children}"
+@page "/second-parent"
+
+@inject WorkDetails Parent1WD;
+@inject IMinWageService MWService;
+@inject FinancialDetails Fd;
+@inject NavigationManager _navigator;
+
+
+<EditForm Model=Fd OnValidSubmit=Submit>
+<CascadingValue Value="true" >
+<ParentWorkDetails Parent="Second Parent" ChangeDetails=OnChangeDetails/>
+<NextPageButton  Text="Results" />
+</CascadingValue>
+</EditForm>	
+
+
+@code {
+	[Parameter]
+	public string Children { get; set; }
+
+	protected override void OnInitialized()
+	{
+		//Fd.ChildrenAmount = Convert.ToInt32(Children);
+		Fd.Parent2WorkDetails = new WorkDetails(MWService) {Period = Period.Year};
+		Fd.Parent2WorkDetails.TaxYear = Fd.TaxYear;
+	}
+
+	private void OnChangeDetails(WorkDetails parent2WorkDetails)
+	{
+		parent2WorkDetails.Period = Period.Year;
+		Fd.Parent2WorkDetails = parent2WorkDetails;
+	}
+
+	private void Submit()
+	{
+		_navigator.NavigateTo("result");
+	}
+
+}

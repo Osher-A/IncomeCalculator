@@ -9,7 +9,7 @@ namespace IncomeCalculator.Shared.Interfaces
     {
         List<MinWage> MinWages { get; set; }
 
-        bool CanAddMinWage(MinWage dtoMinWage);
+        Task<bool> CanAddMinWage(MinWage dtoMinWage);
         Task<MinWage> GetMinWage(int age, DateTime taxYear);
     }
 }

@@ -17,10 +17,10 @@
             <ValidationMessage For="@(() => WdModel.HoursPW)"/>
 		</div>
 
-		<div style="grid-column: 1 / 2;" class="text-right">
+		<div style="grid-column: 1 / 2; display: @RateDisplay; " class="text-right">
 			<label for="rate" class="form-label">Hourly rate</label>
 		</div>
-		<div style="grid-column: 2 / 3;">
+		<div style="grid-column: 2 / 3; display: @RateDisplay; ">
 			<input type="text" id="rate" placeHolder="£0.00" class="form-control border-dark" @bind-value="@WdModel.HourlyRate" @bind-value:event="oninput"  @onmouseleave=OnDetailsChanged/>
 		</div>
 
@@ -37,7 +37,7 @@
 	</div>
     </EditForm>
 
-	@code{
+@code{
     public WorkDetails WdModel { get; set; }
     public string Display
     {
@@ -49,6 +49,17 @@
                 return "none";
         }
     }
+    public string RateDisplay
+    {
+        get
+        {
+            if (WdModel.IsMinWage)
+                return "none";
+            else
+                return "normal";
+        }
+    }
+
 
     public string DisplayTaxYearBox
     {
