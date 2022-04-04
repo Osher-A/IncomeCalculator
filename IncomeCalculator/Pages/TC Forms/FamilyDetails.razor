@@ -1,0 +1,52 @@
+﻿@page "/family-details"
+@inject FinancialDetails Fd
+
+<PageTitle>Tax Credit's Calculator</PageTitle>
+<h1 class="mb-9 mt-4  text-center header" >Tax Credit's Calculator</h1>
+
+<EditForm Model="@this" class="p-3">
+<div  class="container mt-5">
+	<div style="grid-column: 1 / 2;" class="text-right">
+		<label for="children" class="form-col-form-label ">Single Parent</label>
+	</div>
+	<div style="grid-column: 2 / 3;">
+		<InputCheckbox id="parents"  @bind-Value="Fd.SingleParent" class="form-check border-4 border-dark ml-1 mt-1 " style="width: 1.5em; height: 1.5em;"/>
+	</div>
+	<div style="grid-column: 1 / 2;" class="text-right">
+		<label for="children" class="form-col-form-label ">Children</label>
+	</div>
+	<div style="grid-column: 2 / 3;">
+		<InputNumber  id="children" @bind-Value="Fd.ChildrenAmount" class="form-control border-dark"/>
+	</div>
+	@*<div class="text-left" style="grid-column: 2 / 3" >
+     <text style="font-size: 11px;" > * Only children under 16</text>
+	</div>*@
+		<TaxYearBox   ChangeDate=OnChangeDate />
+		</div>
+<NextPageButton Url="@SetUrl()"/>
+</EditForm>
+
+@code {
+
+	//public DateTime TaxYear { get; set; } = new DateTime(2021,01,01);
+	public int ChildrenAmount { get; set; } = 0;
+
+	protected override void OnInitialized()
+	{
+		Fd.TaxYear = new DateTime(2021, 01, 01);
+	}
+
+	private void OnChangeDate(DateTime date)
+	{
+		//TaxYear = date
+		Fd.TaxYear = date; 
+	}
+
+	private string SetUrl()
+	{
+		//return "first-parent/" + ChildrenAmount + "/"  + TaxYear.ToLongDateString();
+		return "first-parent";
+	}
+
+	
+}

@@ -1,7 +1,7 @@
 ﻿using IncomeCalculator.Data;
+using IncomeCalculator.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using IncomeCalculator.Enums;
 using System.Linq;
 using System;
 

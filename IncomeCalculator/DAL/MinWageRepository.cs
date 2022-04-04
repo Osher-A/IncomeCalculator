@@ -16,7 +16,6 @@ namespace IncomeCalculator.DAL
         {
             _dbContext = dbContext;
         }
-        public MinWageRepository() { }
 
         public List<MinWage> GetMinWages()
         {
@@ -39,6 +38,13 @@ namespace IncomeCalculator.DAL
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public async Task<List<MinWage>> GetMinWagesAsync()
+        {
+             return  await _dbContext.MinWages
+                    .OrderBy(mw => mw.TaxYear)
+                    .OrderByDescending(mw => mw.Age).ToListAsync();
+            
         }
         public void AddMinWage(Data.MinWage minWage)
         {

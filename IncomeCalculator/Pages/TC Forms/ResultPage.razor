@@ -1,0 +1,123 @@
+﻿@page "/result"
+
+@inject FinancialDetails Fd;
+@inject IMessageService MessageService;
+@inject ITaxCreditsRepository TaxCreditsRepo;
+@using IncomeCalculator.Services;
+@using Microsoft.JSInterop;
+@using IncomeCalculator.ViewModels;
+@using IncomeCalculator.Enums;
+
+<style>
+    input {
+        height: 2.5em;
+        padding: 1em;
+        width: 12em;
+        box-sizing: border-box;
+    }
+</style>
+<h1 class="header text-center">Results</h1>
+
+<EditForm Model=@Fd>
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>Tax year</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly="readonly" Value="@String.Format("April {0}", Fd.TaxYear.Year.ToString())" />
+    </div>
+</div>
+
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>No. of Children</label>
+    </div>
+    <div class="col-6 ">
+        <input type="number" class="rounded" readonly Value="@Fd.ChildrenAmount"/>
+    </div>
+</div>
+
+<div class="row  p-3 ">
+    <div class="col-6 text-right">
+        <label>@Parent weekly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" id="parent1WeeklyIncome" class="rounded" readonly Value="@String.Format("{0:C}" ,Parent1WeeklyIncome)"/>
+    </div>
+</div>
+
+<div class="row  p-3" style="display: @Display">
+    <div class="col-6 text-right">
+        <label>Parent 2 weekly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" class="rounded" readonly Value="@String.Format("{0:C}", Parent2WeeklyIncome)"/>
+    </div>
+</div>
+
+<div class="row p-3">
+    <div class="col-6 text-right">
+        <label>Total yearly income</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" id="yearlyIncome" class="rounded" readonly value="@String.Format("{0:C}", Fd.CombindedIncome)" />
+    </div>
+</div>
+
+<div class="row mt-3 p-3">
+    <div class="col-6 text-right">
+        <label style="font-size: 2em; line-height:normal;" class="header" >Total yearly credits:</label>
+    </div>
+    <div class="col-6 ">
+        <input type="text" id="results" style="height: 3em; border-color:#2477bf ;" class="rounded " readonly value="@String.Format("{0:C}", Total)"/>
+    </div>
+</div>
+</EditForm>
+
+
+@code {
+
+    public decimal Total { get; set; }
+    public decimal Parent1WeeklyIncome { get; private set; }
+    public decimal Parent2WeeklyIncome { get; private set; }
+    public string Parent { get; private set; }
+    public string Display { get; private set; }
+    protected async override void OnInitialized()
+    {
+        if(Fd.SingleParent)
+        {
+            Parent = "Parent";
+            Display = "None";
+        }
+        else
+        {
+            Parent = "Parent 1";
+            Display = "Normal";
+        }
+
+        Parent1WeeklyIncome = (Fd.Parent1WorkDetails.Total > 0)? Fd.Parent1WorkDetails.Total / 52: 0;
+        Parent2WeeklyIncome = (Fd.Parent2WorkDetails?.Total > 0)? Fd.Parent2WorkDetails.Total / 52: 0;
+
+        try
+        {
+            var taxCreditService = new TCCalculatorService(Fd, TaxCreditsRepo);
+            var results = taxCreditService.GetTaxCreditsTotal();
+            Total = results.Item1;
+            AlertUser(results.Item2);
+        }
+        catch (Exception ex)
+        {
+            await  MessageService.TostrAlert(MessageType.Error, ex.Message);
+        }
+
+    }
+
+    private async void AlertUser(string message)
+    {
+        if (String.IsNullOrWhiteSpace(message))
+            await MessageService.TostrAlert(MessageType.Success, "Task completed successfully!");
+        else
+            await MessageService.SweetAlert("Information", message);
+    }
+
+}

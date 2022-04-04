@@ -3,6 +3,7 @@ using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using IncomeCalculator.Services;
 using IncomeCalculator.ViewModels;
+using IncomeCalculator.Shared.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

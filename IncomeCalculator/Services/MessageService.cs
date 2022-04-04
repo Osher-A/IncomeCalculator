@@ -1,7 +1,8 @@
-﻿using IncomeCalculator.Enums;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
+using IncomeCalculator.Shared.Interfaces;
+using IncomeCalculator.Shared.Enums;
 
 namespace IncomeCalculator.Services
 {
@@ -21,6 +22,7 @@ namespace IncomeCalculator.Services
         {
             await _jsRuntime.InvokeVoidAsync("ShowToastr", type.ToString(), message);
         }
+
        
     }
 }

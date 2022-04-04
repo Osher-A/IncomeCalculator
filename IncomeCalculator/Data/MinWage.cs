@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using IncomeCalculator.Shared.DTO;
+using IncomeCalculator.Shared.Interfaces;
 
 #nullable disable
 
 namespace IncomeCalculator.Data
 {
-    public partial class MinWage
+    public partial class MinWage 
     {
         public int Id { get; set; }
         public int Age { get; set; }

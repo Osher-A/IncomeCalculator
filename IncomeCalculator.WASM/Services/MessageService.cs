@@ -1,0 +1,28 @@
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Threading.Tasks;
+using IncomeCalculator.Shared.Interfaces;
+using IncomeCalculator.Shared.Enums;
+
+namespace IncomeCalculator.WASM.Services
+{
+    public class MessageService : IMessageService
+    {
+        private IJSRuntime _jsRuntime;
+        public MessageService(IJSRuntime jsRuntime)
+        {
+            _jsRuntime = jsRuntime;
+        }
+        public async Task SweetAlert(string heading, string message)
+        {
+            await _jsRuntime.InvokeVoidAsync("ShowSwal", heading, message);
+        }
+
+        public async Task TostrAlert(MessageType type, string message)
+        {
+            await _jsRuntime.InvokeVoidAsync("ShowToastr", type.ToString(), message);
+        }
+
+
+    }
+}

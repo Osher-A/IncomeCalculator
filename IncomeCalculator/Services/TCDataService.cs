@@ -2,6 +2,7 @@
 using BootstrapBlazor.Components;
 using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
+using IncomeCalculator.Shared.Interfaces;
 using System.Linq;
 
 namespace IncomeCalculator.Services
@@ -17,12 +18,12 @@ namespace IncomeCalculator.Services
             _mapper = mapper;
             _messageService = messageSerice;
         }
-        public bool CanAddWTCData(DTO.WorkingTaxCredit dtoWTC)
+        public bool CanAddWTCData(Shared.DTO.WorkingTaxCredit dtoWTC)
         {
             var existing = _taxCreditsRepo.GetAllWTCData().Any(wtc => wtc.TaxYear.Year == dtoWTC.TaxYear.Year);
             if(!existing)
             {
-                var dataWtc = _mapper.Map<DTO.WorkingTaxCredit, Data.WorkingTaxCredit>(dtoWTC);
+                var dataWtc = _mapper.Map<Shared.DTO.WorkingTaxCredit, Data.WorkingTaxCredit>(dtoWTC);
                 _taxCreditsRepo.AddWTCData(dataWtc);
                 return true;
             }
@@ -31,12 +32,12 @@ namespace IncomeCalculator.Services
             return false;
         }
 
-        public bool CanAddCTCData(DTO.ChildTaxCredit dtoCTC)
+        public bool CanAddCTCData(Shared.DTO.ChildTaxCredit dtoCTC)
         {
             var existing = _taxCreditsRepo.GetAllCTCData().Any(ctc => ctc.TaxYear.Year == dtoCTC.TaxYear.Year);
             if(!existing)
             {
-                var dataCtc = _mapper.Map<DTO.ChildTaxCredit, Data.ChildTaxCredit>(dtoCTC);
+                var dataCtc = _mapper.Map<Shared.DTO.ChildTaxCredit, Data.ChildTaxCredit>(dtoCTC);
                 _taxCreditsRepo.AddCTCData(dataCtc);
                 return true;
             }

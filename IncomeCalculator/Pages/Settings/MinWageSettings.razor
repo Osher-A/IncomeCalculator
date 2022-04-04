@@ -1,0 +1,45 @@
+﻿@page "/min-wage-settings"
+@inject MinWageService Service;
+@inject IMessageService MessageService;
+@using IncomeCalculator.Enums;
+@attribute [Authorize(Roles = "Admin")]
+
+<EditForm Model=MinWage OnValidSubmit=Submit>
+<DataAnnotationsValidator/>
+<h2 class="mt-5 text-center header">Min wage's settings</h2>
+<div style="width: 50%; height: 20%; margin: 3% auto auto auto;">
+    <table  class="table table-bordered border-2 border-secondary" >
+  <tbody>
+    <tr>
+      <th scope="row">Tax Year</th>
+      <td><InputDate @bind-Value=MinWage.TaxYear class="form-control" style="background-color: transparent"/></td>
+    </tr>
+    <tr>
+      <th scope="row">Age</th>
+      <td><InputNumber @bind-Value=MinWage.Age class="form-control" style="background-color: transparent"/></td>
+    </tr>
+    <tr>
+      <th scope="row">Wage</th>
+      <td><InputNumber @bind-Value=MinWage.Wage class="form-control" style="background-color: transparent"/></td>
+    </tr>
+  </tbody>
+</table>
+<ValidationSummary/>
+<div style="display: flex; justify-content: right; ">
+<button class="btn btn-primary form-control mt-4" >Submit</button>
+</div>
+</div>
+</EditForm>
+
+@code {
+    public DTO.MinWage MinWage = new DTO.MinWage();
+
+    public async void Submit()
+    {
+        if(Service.CanAddMinWage(MinWage));
+        await MessageService.TostrAlert(Enums.MessageType.Success, "Operation successful!");
+
+        MinWage = new DTO.MinWage();
+    }
+
+}
