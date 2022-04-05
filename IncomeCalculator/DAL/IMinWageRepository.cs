@@ -8,5 +8,6 @@ namespace IncomeCalculator.DAL
     {
         void AddMinWage(MinWage minWage);
         List<MinWage> GetMinWages();
+        Task<List<MinWage>> GetMinWagesAsync();
     }
 }
