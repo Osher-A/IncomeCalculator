@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IncomeCalculator.Shared.DTO;
 using IncomeCalculator.Shared.Interfaces;
+using IncomeCalculator.Shared.Enums;
 
 namespace IncomeCalculator.Services
 {
@@ -16,24 +17,27 @@ namespace IncomeCalculator.Services
         private IMinWageRepository _minWageRepository;
         private IMapper _mapper;
         private IMessageService _messageService;
-        public List<Shared.DTO.MinWage> MinWages { get; set; }
+        private List<Shared.DTO.MinWage> _minWages;
         public MinWageService(IMinWageRepository minWageRepository, IMapper mapper, IMessageService messageService)
         {
             _minWageRepository = minWageRepository;
             _messageService = messageService;
             _mapper = mapper;
-            GetAll();
+            LoadData();
         }
-
-        public async Task<Shared.DTO.MinWage> GetMinWage(int age, DateTime taxYear)
+        public List<Shared.DTO.MinWage> GetAllMinWages()
+        {
+            return _minWages;
+        }
+        public async Task<Shared.DTO.MinWage> GetMinWageAsync(int age, DateTime taxYear)
         {
             try
             {
-                return await Task.Run(() => MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
+                return  _minWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
                         .OrderByDescending(mw => mw.Wage)
-                        .First());
+                        .First();
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, "There doesn't seem to be any data for your query!");
                 return new Shared.DTO.MinWage { Wage = 0 };
@@ -44,25 +48,35 @@ namespace IncomeCalculator.Services
                 return new Shared.DTO.MinWage { Wage = 0 };
             }
         }
-        public async Task<bool> CanAddMinWage(Shared.DTO.MinWage dtoMinWage)
+        public async Task AddMinWageAsync(Shared.DTO.MinWage dtoMinWage)
         {
-            var existing = MinWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
+            var existing = _minWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
             if (!existing)
             {
-                dtoMinWage.TaxYear = new DateTime(dtoMinWage.TaxYear.Year, 04, 06);
-                var dataMW = _mapper.Map<Shared.DTO.MinWage, Data.MinWage>(dtoMinWage);
-                _minWageRepository.AddMinWage(dataMW);
-                GetAll();
-                return true;
+                AddMinWage(dtoMinWage);
+                await _messageService.TostrAlert(MessageType.Success, "Operation successful!");
+                await LoadDataAsync();
             }
             else
                 await  _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-            return false;
         }
 
-        private void GetAll()
+        private void AddMinWage(Shared.DTO.MinWage dtoMinWage)
         {
-            MinWages = _mapper.Map<IEnumerable<Data.MinWage>, IEnumerable<Shared.DTO.MinWage>>(_minWageRepository.GetMinWages()).ToList();
+            dtoMinWage.TaxYear = new DateTime(dtoMinWage.TaxYear.Year, 04, 06);
+            var dataMW = _mapper.Map<Shared.DTO.MinWage, Data.MinWage>(dtoMinWage);
+            _minWageRepository.AddMinWage(dataMW);
+            LoadDataAsync();
+        }
+
+        private void LoadData()
+        {
+            _minWages = _mapper.Map<List<Data.MinWage>, List<Shared.DTO.MinWage>>(_minWageRepository.GetAllMinWages());
+        }
+        private async Task LoadDataAsync()
+        {
+            var minWages = await _minWageRepository.GetAllMinWagesAsync();
+            _minWages = _mapper.Map<List<Data.MinWage>, List<Shared.DTO.MinWage>>(minWages);
         }
     }
 

@@ -1,5 +1,7 @@
 using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
+using IncomeCalculator.Shared.Interfaces;
+using IncomeCalculator.WASM.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -21,7 +23,7 @@ builder.Services.AddCors(o => o.AddPolicy("IC", builder =>
 {
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
-builder.Services.AddScoped<IMinWageRepository, MinWageRepository>();
+builder.Services.AddScoped<MinWageApiService>();
 builder.Services.AddScoped<ITaxCreditsRepository, TaxCreditsRepository>();
 
 var app = builder.Build();

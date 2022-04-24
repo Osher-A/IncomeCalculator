@@ -2,8 +2,10 @@
 using BootstrapBlazor.Components;
 using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
+using IncomeCalculator.Shared.Enums;
 using IncomeCalculator.Shared.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IncomeCalculator.Services
 {
@@ -12,38 +14,36 @@ namespace IncomeCalculator.Services
         private ITaxCreditsRepository _taxCreditsRepo;
         private IMapper _mapper;
         private IMessageService _messageService;
-        public TCDataService(ITaxCreditsRepository tcRepo, IMapper mapper, IMessageService messageSerice)
+        public TCDataService(ITaxCreditsRepository tcRepo, IMapper mapper, IMessageService messageService)
         {
             _taxCreditsRepo = tcRepo;
             _mapper = mapper;
-            _messageService = messageSerice;
+            _messageService = messageService;
         }
-        public bool CanAddWTCData(Shared.DTO.WorkingTaxCredit dtoWTC)
+        public async Task AddWTCData(Shared.DTO.WorkingTaxCredit dtoWTC)
         {
             var existing = _taxCreditsRepo.GetAllWTCData().Any(wtc => wtc.TaxYear.Year == dtoWTC.TaxYear.Year);
             if(!existing)
             {
                 var dataWtc = _mapper.Map<Shared.DTO.WorkingTaxCredit, Data.WorkingTaxCredit>(dtoWTC);
                 _taxCreditsRepo.AddWTCData(dataWtc);
-                return true;
+                await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
              else
-                _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-            return false;
+               await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
         }
 
-        public bool CanAddCTCData(Shared.DTO.ChildTaxCredit dtoCTC)
+        public async Task AddCTCData(Shared.DTO.ChildTaxCredit dtoCTC)
         {
             var existing = _taxCreditsRepo.GetAllCTCData().Any(ctc => ctc.TaxYear.Year == dtoCTC.TaxYear.Year);
             if(!existing)
             {
                 var dataCtc = _mapper.Map<Shared.DTO.ChildTaxCredit, Data.ChildTaxCredit>(dtoCTC);
                 _taxCreditsRepo.AddCTCData(dataCtc);
-                return true;
+                await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
             else
-                _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-            return false;
+               await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
         }
     }
 }

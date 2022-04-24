@@ -3,6 +3,7 @@ using IncomeCalculator.Shared.Interfaces;
 using IncomeCalculator.Shared.DTO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using IncomeCalculator.Shared.Enums;
 
 namespace IncomeCalculator.WASM.Services
 {
@@ -17,30 +18,28 @@ namespace IncomeCalculator.WASM.Services
             _tcApiService = tCApiService;
             _messageService = messageSerice;
         }
-        public async Task<bool> CanAddWTCData(WorkingTaxCredit dtoWTC)
+        public async Task AddWTCData(WorkingTaxCredit dtoWTC)
         {
             var existing = (await  _tcApiService.GetWTCData()).Any(wtc => wtc.TaxYear.Year == dtoWTC.TaxYear.Year);
             if (!existing)
             {
                 await _tcApiService.AddWTC(dtoWTC);
-                return true;
+                await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
             else
                 await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-            return false;
         }
 
-        public async Task<bool> CanAddCTCData(ChildTaxCredit dtoCTC)
+        public async Task AddCTCData(ChildTaxCredit dtoCTC)
         {
             var existing = (await _tcApiService.GetCTCData()).Any(ctc => ctc.TaxYear.Year == dtoCTC.TaxYear.Year);
             if (!existing)
             {
                await _tcApiService.AddCTC(dtoCTC);
-                return true;
+               await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
             else
                await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-            return false;
         }
 
         

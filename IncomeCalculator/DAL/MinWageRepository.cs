@@ -17,7 +17,7 @@ namespace IncomeCalculator.DAL
             _dbContext = dbContext;
         }
 
-        public List<MinWage> GetMinWages()
+        public List<MinWage> GetAllMinWages()
         {
             try
             {
@@ -39,7 +39,7 @@ namespace IncomeCalculator.DAL
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<List<MinWage>> GetMinWagesAsync()
+        public async Task<List<MinWage>> GetAllMinWagesAsync()
         {
              return  await _dbContext.MinWages
                     .OrderBy(mw => mw.TaxYear)

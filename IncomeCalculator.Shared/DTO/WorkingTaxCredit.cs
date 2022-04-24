@@ -11,19 +11,19 @@ namespace IncomeCalculator.Shared.DTO
         public DateTime TaxYear { get; set; } = new DateTime(DateTime.Now.Year, 04, 06);
         [Required]
         [NotNull]
-        public decimal? BasicElement { get; set; } = null;
+        public decimal BasicElement { get; set; } 
         [Required]
         [NotNull]
-        public decimal? SecondAdult { get; set; }
+        public decimal SecondAdult { get; set; }
         [Required]
         [NotNull]
-        public decimal? ThirtyHourElement { get; set; }
+        public decimal ThirtyHourElement { get; set; }
         [Required]
         [NotNull]
-        public decimal? Threshold { get; set; }
+        public decimal Threshold { get; set; }
         [Required]
         [NotNull]
-        public float? WithdrawalRate { get; set; }
+        public float WithdrawalRate { get; set; }
 
         public WorkingTaxCredit(DateTime taxYear, decimal basicElement,
             decimal secondAdult, decimal thirtyHourElement, decimal threshold, float withdrawalRate)

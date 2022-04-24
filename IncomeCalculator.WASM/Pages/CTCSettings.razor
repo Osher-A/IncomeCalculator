@@ -42,9 +42,7 @@
     public ChildTaxCredit CTC { get; set; } = new ChildTaxCredit();
     public async void Submit()
     {
-        if(await TCService.CanAddCTCData(CTC))
-          await MessageService.TostrAlert(MessageType.Success, "Operation Successful!");
-
+        await TCService.AddCTCData(CTC);
         CTC = new ChildTaxCredit();
     }
 

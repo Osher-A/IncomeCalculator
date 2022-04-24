@@ -1,5 +1,7 @@
-﻿using IncomeCalculator.DAL;
-using IncomeCalculator.Data;
+﻿using IncomeCalculator.Shared.DTO;
+using IncomeCalculator.Shared.Interfaces;
+using MyWebApi.DAL;
+using IncomeCalculator.WASM.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 
@@ -11,23 +13,25 @@ namespace MyWebApi.Controllers
     [ApiController]
     public class MinWageController : ControllerBase
     {
-        private IMinWageRepository _minWageRepository;
-        public MinWageController(IMinWageRepository minWageRepo)
+        private MinWageProxyRepo _minWageProxyRepo;
+
+        public MinWageController(IMinWageRepository minWageRepository)
         {
-            _minWageRepository = minWageRepo;
+            _minWageProxyRepo = new MinWageProxyRepo(minWageRepository);
         }
+       
         // GET: api/<MinWageController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _minWageRepository.GetMinWagesAsync());
+            return Ok(await _minWageProxyRepo.GetAllMinWagesAsync());
         }
 
         // POST api/<MinWageController>
         [HttpPost]
-        public void Post([FromBody] MinWage minWage)
+        public async void Post([FromBody] MinWage minWage)
         {
-            _minWageRepository.AddMinWage(minWage);
+            await Task.Run(() => _minWageProxyRepo.AddMinWage(minWage));
         }
 
     }

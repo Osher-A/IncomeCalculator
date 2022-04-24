@@ -3,6 +3,8 @@
 @inject FinancialDetails Fd;
 @inject IMessageService MessageService;
 @inject ITaxCreditsRepository TaxCreditsRepo;
+@inject IMapper _mapper;
+@using AutoMapper;
 @using IncomeCalculator.Services;
 @using Microsoft.JSInterop;
 @using IncomeCalculator.ViewModels;
@@ -99,24 +101,14 @@
 
         try
         {
-            var taxCreditService = new TCCalculatorService(Fd, TaxCreditsRepo);
-            var results = taxCreditService.GetTaxCreditsTotal();
-            Total = results.Item1;
-            AlertUser(results.Item2);
+            var taxCreditService = new TCCalculatorService(Fd, TaxCreditsRepo, MessageService, _mapper);
+            Total = taxCreditService.GetTotalCredits();
         }
         catch (Exception ex)
         {
             await  MessageService.TostrAlert(MessageType.Error, ex.Message);
         }
 
-    }
-
-    private async void AlertUser(string message)
-    {
-        if (String.IsNullOrWhiteSpace(message))
-            await MessageService.TostrAlert(MessageType.Success, "Task completed successfully!");
-        else
-            await MessageService.SweetAlert("Information", message);
     }
 
 }

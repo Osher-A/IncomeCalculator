@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Linq;
+using IncomeCalculator.Shared.Enums;
+using IncomeCalculator.Shared.Interfaces;
 
 namespace IncomeCalculator.WASM.Services
 {
@@ -24,14 +26,16 @@ namespace IncomeCalculator.WASM.Services
         private int _numberOfParents;
         private decimal _wtcThreshold;
         private decimal _ctcThreshold;
-        public TCCalculatorApiService(HttpClient httpClient, TCApiService tCApiService, FinancialDetails financialDetails)
+        private IMessageService _messageService;
+        public TCCalculatorApiService(HttpClient httpClient, TCApiService tCApiService, FinancialDetails financialDetails, IMessageService messageService)
         {
             _httpClient = httpClient;
             _tCApiService = tCApiService;
             _financialDetails = financialDetails;
+            _messageService = messageService;   
             _numberOfParents = financialDetails.SingleParent ? 1 : 2;
         }
-        public async Task<(decimal, string)> GetTaxCreditsTotal()
+        public async Task<decimal> GetTotalCredits()
         {
             await LoadData(_financialDetails.TaxYear);
 
@@ -42,7 +46,8 @@ namespace IncomeCalculator.WASM.Services
             decimal withdrawalAmount =  WithdrawalAmount(totalIncome);
 
             var totalCredits = maxTaxCredits - withdrawalAmount;
-            return (CreditsEntitlement(totalCredits, children), _message);
+            InformUser();
+            return CreditsEntitlement(totalCredits, children);
         }
         private async Task<decimal> GetTotalIncome()
         {
@@ -67,22 +72,28 @@ namespace IncomeCalculator.WASM.Services
         private decimal WTC()
         {
             decimal parent1HoursPW = _financialDetails.Parent1WorkDetails.HoursPW;
-            decimal parent2HoursPW = _financialDetails.Parent2WorkDetails != null ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
+            decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null) ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
             if (_financialDetails.SingleParent)
-            {
-                if (parent1HoursPW >= 30)
-                    return (decimal)_wtcDetails.BasicElement + (decimal)_wtcDetails.ThirtyHourElement;
-                else if (parent1HoursPW >= 16)
-                    return (decimal)_wtcDetails.BasicElement;
-            }
+                return SingleParentWTC(parent1HoursPW);
             else
-            {
-                if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
-                    if (parent1HoursPW + parent2HoursPW >= 30)
-                        return (decimal)_wtcDetails.BasicElement + (decimal)_wtcDetails.SecondAdult + (decimal) _wtcDetails.ThirtyHourElement;
-                    else if (parent1HoursPW + parent2HoursPW >= 24)
-                        return (decimal)_wtcDetails.BasicElement + (decimal)_wtcDetails.SecondAdult;
-            }
+                return CoupleWTC(parent1HoursPW, parent2HoursPW);
+        }
+
+        private decimal SingleParentWTC(decimal hoursPW)
+        {
+            if (hoursPW >= 30)
+                return _wtcDetails.BasicElement + _wtcDetails.ThirtyHourElement;
+            else if (hoursPW >= 16)
+                return _wtcDetails.BasicElement;
+            return 0;
+        }
+        private decimal CoupleWTC(decimal parent1HoursPW, decimal parent2HoursPW)
+        {
+            if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
+                if (parent1HoursPW + parent2HoursPW >= 30)
+                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult + _wtcDetails.ThirtyHourElement;
+                else if (parent1HoursPW + parent2HoursPW >= 24)
+                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult;
             return 0;
         }
 
@@ -131,6 +142,20 @@ namespace IncomeCalculator.WASM.Services
                 return totalCredits;
         }
 
+        private async void InformUser()
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(_message))
+                    await _messageService.TostrAlert(MessageType.Success, "Task completed successfully!");
+                else
+                    await _messageService.SweetAlert("Information", _message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         private async Task LoadData(DateTime taxYear)
         {
             try

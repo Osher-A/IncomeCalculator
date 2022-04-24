@@ -69,7 +69,7 @@ namespace IncomeCalculator.WASM.ViewModel
         {
             try
             {
-                var minwage = await _minWageService.GetMinWage(Age, TaxYear);
+                var minwage = await _minWageService.GetMinWageAsync(Age, TaxYear);
                 _hourlyRate = minwage.Wage.ToString();
             }
             catch (Exception ex) 

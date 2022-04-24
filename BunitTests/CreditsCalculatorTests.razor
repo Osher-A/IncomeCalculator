@@ -1,11 +1,11 @@
-﻿@using IncomeCalculator.Componnents
-@using IncomeCalculator.ViewModels
-@using IncomeCalculator.Pages
-@using IncomeCalculator.Services
-@using IncomeCalculator.DAL
-@using IncomeCalculator.Data
-@using Moq;
-@using IncomeCalculator.Shared.Interfaces;
+﻿@    using IncomeCalculator.Componnents
+@    using IncomeCalculator.ViewModels
+@    using IncomeCalculator.Pages
+@    using IncomeCalculator.Services
+@    using IncomeCalculator.DAL
+@    using IncomeCalculator.Data
+@    using Moq;
+@    using IncomeCalculator.Shared.Interfaces;
 @inherits BunitTestContext
 @code {
     private Mock<IMessageService> _messageService;
@@ -17,7 +17,7 @@
     {
         _messageService = new Mock<IMessageService>();
         _minWageRepo = new Mock<IMinWageRepository>();
-        _minWageRepo.Setup(mw => mw.GetMinWages()).Returns(GetMinWageData());
+        _minWageRepo.Setup(mw => mw.GetAllMinWages()).Returns(GetMinWageData());
         _tCRepo = new Mock<ITaxCreditsRepository>();
         _tCRepo.Setup(tc => tc.CTCDetails()).Returns(CTCDetails());
         _tCRepo.Setup(tc => tc.WTCDetails()).Returns(WTCDetails());

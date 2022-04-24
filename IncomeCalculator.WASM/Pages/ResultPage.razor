@@ -97,11 +97,10 @@
         CombindedIncome = await Fd.CombindedIncome();
         try
         {
-            var taxCreditService = new TCCalculatorApiService(HttpClient, TCApiService, Fd);
-            var results = await taxCreditService.GetTaxCreditsTotal();
-            Total = (decimal)results.Item1;
+            var taxCreditService = new TCCalculatorApiService(HttpClient, TCApiService, Fd, MessageService);
+            var results = await taxCreditService.GetTotalCredits();
+            Total = await taxCreditService.GetTotalCredits();
             StateHasChanged();
-            AlertUser(results.Item2);
         }
         catch (Exception ex)
         {

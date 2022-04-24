@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IncomeCalculator.WASM\IncomeCalculator.WASM.csproj" />
     <ProjectReference Include="..\IncomeCalculator\IncomeCalculator.csproj" />
   </ItemGroup>
 

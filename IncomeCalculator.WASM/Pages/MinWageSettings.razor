@@ -35,9 +35,7 @@
 
     public async void Submit()
     {
-        if(await Service.CanAddMinWage(MinWage))
-        await MessageService.TostrAlert(MessageType.Success, "Operation successful!");
-
+        await Service.AddMinWageAsync(MinWage);
         MinWage = new MinWage();
     }
 

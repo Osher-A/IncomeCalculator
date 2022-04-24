@@ -44,9 +44,7 @@
     public WorkingTaxCredit WTC { get; set; } = new WorkingTaxCredit();
     public async void Submit()
     {
-        if(await TCService.CanAddWTCData(WTC))
-           await MessageService.TostrAlert(MessageType.Success, "Operation Successful!");
-
+        await TCService.AddWTCData(WTC);
         WTC = new WorkingTaxCredit();
     }
 

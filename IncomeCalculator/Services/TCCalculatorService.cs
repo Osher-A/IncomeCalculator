@@ -1,8 +1,11 @@
 ﻿using IncomeCalculator.DAL;
-using IncomeCalculator.Data;
+using IncomeCalculator.Shared.Enums;
+using IncomeCalculator.Shared.DTO;
+using IncomeCalculator.Shared.Interfaces;
 using IncomeCalculator.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using AutoMapper;
 using System;
 
 namespace IncomeCalculator.Services
@@ -18,15 +21,19 @@ namespace IncomeCalculator.Services
         private int _numberOfParents;
         private decimal _wtcThreshold;
         private decimal _ctcThreshold;
-        public TCCalculatorService(FinancialDetails financialDetails, ITaxCreditsRepository tcRepository)
+        private IMessageService _messageService;
+        private IMapper _mapper;
+        public TCCalculatorService(FinancialDetails financialDetails, ITaxCreditsRepository tcRepository, IMessageService messageService, IMapper mapper)
         {
             _financialDetails = financialDetails;
             _tcRepository = tcRepository;
             _tcRepository.TaxYear = _financialDetails.TaxYear;
             _numberOfParents = (financialDetails.SingleParent) ? 1 : 2;
-            SetUpData();
+            _messageService = messageService;
+            _mapper = mapper;
+            LoadData();
         }
-        public (decimal, string) GetTaxCreditsTotal()
+        public decimal GetTotalCredits()
         {
             var totalIncome = GetTotalIncome();
             var children = _financialDetails.ChildrenAmount;
@@ -35,7 +42,8 @@ namespace IncomeCalculator.Services
             decimal withdrawalAmount = WithdrawalAmount(totalIncome);
 
             var totalCredits = maxTaxCredits - withdrawalAmount;
-            return (CreditsEntitlement(totalCredits, children), _message);
+            InformUser();
+            return (CreditsEntitlement(totalCredits, children));
         }
         private decimal GetTotalIncome()
         {
@@ -53,7 +61,7 @@ namespace IncomeCalculator.Services
         {
             decimal parent1HoursPW = _financialDetails.Parent1WorkDetails.HoursPW;
             decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null) ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
-            if (WTC() < 0)
+            if (WTC() <= 0)
                 _message = "You are not entitled to Working Tax Credit, one parent has to be working at least 16 hrs pw, and for two parent's it's also required that both parents work a min of 24 hours pw combined";
             return WTC();
         }
@@ -62,23 +70,28 @@ namespace IncomeCalculator.Services
             decimal parent1HoursPW = _financialDetails.Parent1WorkDetails.HoursPW;
             decimal parent2HoursPW = (_financialDetails.Parent2WorkDetails != null) ? _financialDetails.Parent2WorkDetails.HoursPW : 0;
             if (_financialDetails.SingleParent)
-            {
-                if (parent1HoursPW >= 30)
-                    return _wtcDetails.BasicElement + _wtcDetails.ThirtyHourElement;
-                else if (parent1HoursPW >= 16)
-                    return _wtcDetails.BasicElement;
-            }
+                return SingleParentWTC(parent1HoursPW);
             else
-            {
-                if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
-                    if (parent1HoursPW + parent2HoursPW >= 30)
-                        return _wtcDetails.BasicElement + _wtcDetails.SecondAdult + _wtcDetails.ThirtyHourElement;
-                    else if (parent1HoursPW + parent2HoursPW >= 24)
-                        return _wtcDetails.BasicElement + _wtcDetails.SecondAdult;
-            }
-            return 0;
+               return CoupleWTC(parent1HoursPW, parent2HoursPW);
         }
 
+        private decimal SingleParentWTC(decimal hoursPW)
+        {
+            if (hoursPW >= 30)
+                return _wtcDetails.BasicElement + _wtcDetails.ThirtyHourElement;
+            else if (hoursPW >= 16)
+                return _wtcDetails.BasicElement;
+            return 0;
+        }
+        private decimal CoupleWTC(decimal parent1HoursPW, decimal parent2HoursPW)
+        {
+            if ((parent1HoursPW >= 16 || parent2HoursPW >= 16) && parent1HoursPW + parent2HoursPW >= 24)
+                if (parent1HoursPW + parent2HoursPW >= 30)
+                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult + _wtcDetails.ThirtyHourElement;
+                else if (parent1HoursPW + parent2HoursPW >= 24)
+                    return _wtcDetails.BasicElement + _wtcDetails.SecondAdult;
+          return 0;
+        }
         private decimal WithdrawalAmount(decimal totalIncome)
         {
             decimal overThreshold = OverThresholdAmount(totalIncome);
@@ -123,13 +136,26 @@ namespace IncomeCalculator.Services
             else
                 return totalCredits;
         }
-
-        private void SetUpData()
+        private async void InformUser()
         {
             try
             {
-                _wtcDetails = _tcRepository.WTCDetails();
-                _ctcDetails = _tcRepository.CTCDetails();
+                if (String.IsNullOrWhiteSpace(_message))
+                    await _messageService.TostrAlert(MessageType.Success, "Task completed successfully!");
+                else
+                    await _messageService.SweetAlert("Information", _message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        private void LoadData()
+        {
+            try
+            {
+                _wtcDetails = _mapper.Map<IncomeCalculator.Data.WorkingTaxCredit, WorkingTaxCredit> (_tcRepository.WTCDetails());
+                _ctcDetails = _mapper.Map<IncomeCalculator.Data.ChildTaxCredit, ChildTaxCredit>(_tcRepository.CTCDetails());
                 _wtcThreshold = _wtcDetails.Threshold * _numberOfParents;
                 _ctcThreshold = _ctcDetails.Threshold * _numberOfParents;
             }

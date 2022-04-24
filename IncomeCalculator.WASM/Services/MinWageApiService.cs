@@ -5,6 +5,7 @@ using IncomeCalculator.Shared.Interfaces;
 using System.Threading;
 using System.Text;
 using System.Runtime.InteropServices;
+using IncomeCalculator.Shared.Enums;
 
 namespace IncomeCalculator.WASM.Services
 {
@@ -12,23 +13,28 @@ namespace IncomeCalculator.WASM.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IMessageService _messageService;
-        public List<MinWage>? MinWages { get; set; }
+        private List<MinWage> _minWages;
         public MinWageApiService(HttpClient httpClient, IMessageService messageService)
         {
             _httpClient = httpClient;
             _messageService = messageService;
-            //Task.Run(() => SetMinWages()).Wait();
+            _minWages= new List<MinWage>();
+            LoadData();
         }
-        public async Task<MinWage> GetMinWage(int age, DateTime taxYear)
+
+        public List<MinWage> GetAllMinWages()
+        {
+            return _minWages;
+        }
+        public async Task<MinWage> GetMinWageAsync(int age, DateTime taxYear)
         {
             try
             {
-                await SetMinWages();
-                return MinWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
+                return _minWages.Where(mw => mw.TaxYear.Year == taxYear.Year && mw.Age <= age)
                     .OrderByDescending(mw => mw.Wage)
                     .First();
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, "There doesn't seem to be any data for your query!");
                 return new MinWage { Wage = 0 };
@@ -39,26 +45,25 @@ namespace IncomeCalculator.WASM.Services
                 return new MinWage { Wage = 0};
             }
         }
-        public async Task<bool> CanAddMinWage(MinWage dtoMinWage)
+        public async Task AddMinWageAsync(MinWage dtoMinWage)
         {
-            await SetMinWages();
-            var existing = MinWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
+            var existing = _minWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
             if (!existing)
             {
                 dtoMinWage.TaxYear = new DateTime(dtoMinWage.TaxYear.Year, 04, 06);
-                return true;
+                await AddMinWage(dtoMinWage);
+                await _messageService.TostrAlert(MessageType.Success, "Operation successful!");
+                LoadData();
             }
-                 else
+             else
                 await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
-
-            return false;
         }
-        private async Task SetMinWages()
+        private async void LoadData()
         {
             var response = await _httpClient.GetAsync("/api/minwage");
             var content = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                MinWages = JsonConvert.DeserializeObject<List<MinWage>>(content);
+                _minWages =  JsonConvert.DeserializeObject<List<MinWage>>(content);
         }
 
         private async Task AddMinWage(MinWage dtoMinWage)

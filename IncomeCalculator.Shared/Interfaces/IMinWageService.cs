@@ -7,9 +7,9 @@ namespace IncomeCalculator.Shared.Interfaces
 {
     public interface IMinWageService
     {
-        List<MinWage> MinWages { get; set; }
+        List<MinWage> GetAllMinWages();
 
-        Task<bool> CanAddMinWage(MinWage dtoMinWage);
-        Task<MinWage> GetMinWage(int age, DateTime taxYear);
+        Task AddMinWageAsync(MinWage dtoMinWage);
+        Task<MinWage> GetMinWageAsync(int age, DateTime taxYear);
     }
 }

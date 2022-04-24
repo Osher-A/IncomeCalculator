@@ -42,9 +42,7 @@
     public IncomeCalculator.Shared.DTO.ChildTaxCredit CTC { get; set; } = new ();
     public async void Submit()
     {
-        if(TCService.CanAddCTCData(CTC))
-          await MessageService.TostrAlert(MessageType.Success, "Operation Successful!");
-
+        await TCService.AddCTCData(CTC);
         CTC = new IncomeCalculator.Shared.DTO.ChildTaxCredit();
     }
 

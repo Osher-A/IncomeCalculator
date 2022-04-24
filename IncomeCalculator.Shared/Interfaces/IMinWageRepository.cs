@@ -1,8 +1,8 @@
-﻿using IncomeCalculator.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using IncomeCalculator.Shared.DTO;
 
-namespace IncomeCalculator.DAL
+namespace IncomeCalculator.Shared.Interfaces
 {
     public interface IMinWageRepository
     {

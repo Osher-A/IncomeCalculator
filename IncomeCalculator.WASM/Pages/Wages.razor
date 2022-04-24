@@ -63,13 +63,14 @@
 	protected override void OnInitialized()
 	{
 		WdModel = new WorkDetails(MWService);
+		WdModel.TaxYear = new DateTime(2020, 04, 06);
 	}
 
 
 	private void OnChangeDate(DateTime taxYear)
 	{
 		WdModel.TaxYear = taxYear;
-		//StateHasChanged();
+		StateHasChanged();
 	}
 
 	private void OnDetailsChange(WorkDetails workDetails)
