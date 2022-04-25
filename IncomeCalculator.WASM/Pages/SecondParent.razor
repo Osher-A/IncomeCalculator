@@ -4,7 +4,8 @@
 @inject WorkDetails Parent1WD;
 @inject IMinWageService MWService;
 @inject FinancialDetails Fd;
-@inject NavigationManager _navigator;
+@inject NavigationManager Navigator;
+@inject IMessageService MessageService;
 
 
 <EditForm Model=Fd OnValidSubmit=Submit>
@@ -22,7 +23,7 @@
 	protected override void OnInitialized()
 	{
 		//Fd.ChildrenAmount = Convert.ToInt32(Children);
-		Fd.Parent2WorkDetails = new WorkDetails(MWService) {Period = Period.Year};
+		Fd.Parent2WorkDetails = new WorkDetails(MWService, MessageService) {Period = Period.Year};
 		Fd.Parent2WorkDetails.TaxYear = Fd.TaxYear;
 	}
 
@@ -34,7 +35,7 @@
 
 	private void Submit()
 	{
-		_navigator.NavigateTo("result");
+		Navigator.NavigateTo("result");
 	}
 
 }

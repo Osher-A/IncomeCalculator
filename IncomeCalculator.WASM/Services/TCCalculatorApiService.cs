@@ -144,33 +144,20 @@ namespace IncomeCalculator.WASM.Services
 
         private async void InformUser()
         {
-            try
-            {
                 if (String.IsNullOrWhiteSpace(_message))
                     await _messageService.TostrAlert(MessageType.Success, "Task completed successfully!");
                 else
                     await _messageService.SweetAlert("Information", _message);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
         private async Task LoadData(DateTime taxYear)
         {
-            try
-            {
                 _workingTaxCreditData = await _tCApiService.GetWTCData();
                 _childTaxCreditData = await _tCApiService.GetCTCData();
                 _wtcDetails = GetWTCDetails(taxYear);
                 _ctcDetails = GetCTCDetails(taxYear);
                 _wtcThreshold = (decimal)_wtcDetails.Threshold * _numberOfParents;
                 _ctcThreshold = (decimal)_ctcDetails.Threshold * _numberOfParents;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+           
         }
 
         private WorkingTaxCredit GetWTCDetails(DateTime taxYear)

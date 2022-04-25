@@ -33,10 +33,23 @@
 @code {
     public MinWage MinWage = new MinWage();
 
-    public async void Submit()
+   public async void Submit()
     {
-        await Service.AddMinWageAsync(MinWage);
-        MinWage = new MinWage();
+        try
+        {
+             await Service.AddMinWageAsync(MinWage);
+             MinWage = new ();
+        }
+        catch(Exception ex)
+        {
+            try
+            {
+             await MessageService.TostrAlert(MessageType.Error, ex.Message);
+            }
+            catch(Exception e)
+            {
+            }
+        }
     }
 
 }

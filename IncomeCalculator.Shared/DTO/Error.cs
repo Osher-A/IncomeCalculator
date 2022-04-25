@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IncomeCalculator.Shared.DTO
 {
-    public class ErrorModelDTO
+    public class Error
     {
         public int StatusCode { get; set; }
         public string ErrorMessage { get; set; }

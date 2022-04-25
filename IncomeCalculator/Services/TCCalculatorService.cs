@@ -1,5 +1,4 @@
-﻿using IncomeCalculator.DAL;
-using IncomeCalculator.Shared.Enums;
+﻿using IncomeCalculator.Shared.Enums;
 using IncomeCalculator.Shared.DTO;
 using IncomeCalculator.Shared.Interfaces;
 using IncomeCalculator.ViewModels;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using AutoMapper;
 using System;
+using IncomeCalculator.DAL;
 
 namespace IncomeCalculator.Services
 {
@@ -138,31 +138,18 @@ namespace IncomeCalculator.Services
         }
         private async void InformUser()
         {
-            try
-            {
+            
                 if (String.IsNullOrWhiteSpace(_message))
                     await _messageService.TostrAlert(MessageType.Success, "Task completed successfully!");
                 else
                     await _messageService.SweetAlert("Information", _message);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
         private void LoadData()
         {
-            try
-            {
-                _wtcDetails = _mapper.Map<IncomeCalculator.Data.WorkingTaxCredit, WorkingTaxCredit> (_tcRepository.WTCDetails());
+                _wtcDetails = _mapper.Map<IncomeCalculator.Data.WorkingTaxCredit, WorkingTaxCredit>(_tcRepository.WTCDetails());
                 _ctcDetails = _mapper.Map<IncomeCalculator.Data.ChildTaxCredit, ChildTaxCredit>(_tcRepository.CTCDetails());
                 _wtcThreshold = _wtcDetails.Threshold * _numberOfParents;
                 _ctcThreshold = _ctcDetails.Threshold * _numberOfParents;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
         }
     }
 }

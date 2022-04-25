@@ -1,5 +1,6 @@
 ﻿@page "/wages"
 @inject MinWageService MWService
+@inject IMessageService MessageService;
 <style>
 	
 	h1 ,h2{
@@ -59,7 +60,7 @@
 
 	protected override void OnInitialized()
 	{
-		WdModel = new WorkDetails(MWService);
+		WdModel = new WorkDetails(MWService, MessageService);
 		WdModel.TaxYear = new DateTime(2020, 04, 06);
 	}
 

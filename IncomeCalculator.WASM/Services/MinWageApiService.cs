@@ -36,14 +36,10 @@ namespace IncomeCalculator.WASM.Services
             }
             catch (InvalidOperationException ex)
             {
-                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, "There doesn't seem to be any data for your query!");
                 return new MinWage { Wage = 0 };
+                throw new Exception($"There doesn't seem to be any min wage data for the year: {taxYear.Year} !");
             }
-            catch (Exception ex )
-            {
-                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, ex.Message);
-                return new MinWage { Wage = 0};
-            }
+            catch (Exception ex) { return new MinWage { Wage = 0 }; throw; }
         }
         public async Task AddMinWageAsync(MinWage dtoMinWage)
         {
@@ -60,17 +56,24 @@ namespace IncomeCalculator.WASM.Services
         }
         private async void LoadData()
         {
-            var response = await _httpClient.GetAsync("/api/minwage");
-            var content = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                _minWages =  JsonConvert.DeserializeObject<List<MinWage>>(content);
+            try
+            {
+                var response = await _httpClient.GetAsync("/api/minwage");
+                var content = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                    _minWages = JsonConvert.DeserializeObject<List<MinWage>>(content);
+            }
+            catch (Exception ex)
+            {
+                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, ex.Message);
+            }
         }
 
         private async Task AddMinWage(MinWage dtoMinWage)
         {
-            var content = JsonConvert.SerializeObject(dtoMinWage);
-            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            await _httpClient.PostAsync("/api/minwage", bodyContent);
+                var content = JsonConvert.SerializeObject(dtoMinWage);
+                var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+                await _httpClient.PostAsync("/api/minwage", bodyContent);
         }
 
     }

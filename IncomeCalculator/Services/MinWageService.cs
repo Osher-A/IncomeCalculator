@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,12 +8,13 @@ using System.Threading.Tasks;
 using IncomeCalculator.Shared.DTO;
 using IncomeCalculator.Shared.Interfaces;
 using IncomeCalculator.Shared.Enums;
+using IncomeCalculator.DAL;
 
 namespace IncomeCalculator.Services
 {
     public class MinWageService : IMinWageService
     {
-        private IMinWageRepository _minWageRepository;
+        IMinWageRepository _minWageRepository;
         private IMapper _mapper;
         private IMessageService _messageService;
         private List<Shared.DTO.MinWage> _minWages;
@@ -39,23 +39,19 @@ namespace IncomeCalculator.Services
             }
             catch (InvalidOperationException ex)
             {
-                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, "There doesn't seem to be any data for your query!");
                 return new Shared.DTO.MinWage { Wage = 0 };
+                throw new Exception($"There doesn't seem to be any min wage data for the year: {taxYear.Year} !");
             }
-            catch (Exception ex)
-            {
-                await _messageService.TostrAlert(IncomeCalculator.Shared.Enums.MessageType.Error, ex.Message);
-                return new Shared.DTO.MinWage { Wage = 0 };
-            }
+            catch (Exception ex) { return new Shared.DTO.MinWage { Wage = 0 };  throw; }
         }
         public async Task AddMinWageAsync(Shared.DTO.MinWage dtoMinWage)
         {
             var existing = _minWages.Any(mw => mw.TaxYear == dtoMinWage.TaxYear && mw.Age == dtoMinWage.Age);
             if (!existing)
             {
-                AddMinWage(dtoMinWage);
-                await _messageService.TostrAlert(MessageType.Success, "Operation successful!");
-                await LoadDataAsync();
+                    AddMinWage(dtoMinWage);
+                    await _messageService.TostrAlert(MessageType.Success, "Operation successful!");
+                    await LoadDataAsync();
             }
             else
                 await  _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
@@ -67,6 +63,7 @@ namespace IncomeCalculator.Services
             var dataMW = _mapper.Map<Shared.DTO.MinWage, Data.MinWage>(dtoMinWage);
             _minWageRepository.AddMinWage(dataMW);
             LoadDataAsync();
+           
         }
 
         private void LoadData()

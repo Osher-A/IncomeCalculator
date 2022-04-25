@@ -1,5 +1,5 @@
-﻿using IncomeCalculator.Shared.DTO;
-using IncomeCalculator.Shared.Interfaces;
+﻿using IncomeCalculator.DAL;
+using IncomeCalculator.Data;
 namespace MyWebApi.DAL
 {
     public class MinWageProxyRepo : IMinWageRepository

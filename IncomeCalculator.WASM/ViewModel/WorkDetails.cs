@@ -9,6 +9,7 @@ namespace IncomeCalculator.WASM.ViewModel
     {
         private string _hourlyRate = "£0.00";
         private readonly IMinWageService _minWageService;
+        private IMessageService _messageService;
 
         [Range(10, 120, ErrorMessage = "Please enter a valid age!")]
         public int Age { get; set; }
@@ -32,9 +33,10 @@ namespace IncomeCalculator.WASM.ViewModel
             set => _hourlyRate = value;
         }
 
-        public WorkDetails(IMinWageService minWageService)
+        public WorkDetails(IMinWageService minWageService, IMessageService messageService)
         {
             _minWageService = minWageService;
+            _messageService = messageService;
         }
         public WorkDetails() { }
 

@@ -1,9 +1,10 @@
-﻿using IncomeCalculator.Shared.DTO;
+﻿using IncomeCalculator.Data;
 using IncomeCalculator.Shared.Interfaces;
 using MyWebApi.DAL;
 using IncomeCalculator.WASM.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
+using IncomeCalculator.DAL;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

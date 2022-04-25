@@ -2,6 +2,8 @@
 using IncomeCalculator.DAL;
 using IncomeCalculator.Data;
 using IncomeCalculator.Services;
+using IncomeCalculator.Shared.Enums;
+using IncomeCalculator.Shared.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -12,6 +14,7 @@ namespace IncomeCalculator.ViewModels
     {
         private string _hourlyRate = "0";
         private readonly MinWageService _minWageService;
+        private IMessageService _messageService;
 
         [Range(10, 120, ErrorMessage = "Please enter a valid age!")]
         public int Age { get; set; }
@@ -38,9 +41,10 @@ namespace IncomeCalculator.ViewModels
             set => _hourlyRate = value;
         }
 
-        public WorkDetails(MinWageService minWageService) 
+        public WorkDetails(MinWageService minWageService, IMessageService messageService) 
         {
             _minWageService = minWageService;
+            _messageService = messageService;
         }
         
 
@@ -67,7 +71,16 @@ namespace IncomeCalculator.ViewModels
                 var minwage = await _minWageService.GetMinWageAsync(Age, TaxYear);
                 _hourlyRate = minwage.Wage.ToString();
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                try
+                {
+                    await _messageService.TostrAlert(MessageType.Error, ex.Message);
+                }
+                catch (Exception e)
+                {
+                }
+            }
         }
     }
 

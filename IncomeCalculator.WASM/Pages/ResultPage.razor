@@ -102,9 +102,15 @@
             Total = await taxCreditService.GetTotalCredits();
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            await  MessageService.TostrAlert(MessageType.Error, ex.Message);
+            try
+            {
+             await MessageService.TostrAlert(MessageType.Error, ex.Message);
+            }
+            catch(Exception e)
+            {
+            }
         }
 
     }

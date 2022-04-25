@@ -44,8 +44,21 @@
     public WorkingTaxCredit WTC { get; set; } = new WorkingTaxCredit();
     public async void Submit()
     {
-        await TCService.AddWTCData(WTC);
-        WTC = new WorkingTaxCredit();
+         try
+        {
+             await TCService.AddWTCData(WTC);
+             WTC = new ();
+        }
+        catch(Exception ex)
+        {
+            try
+            {
+             await MessageService.TostrAlert(MessageType.Error, ex.Message);
+            }
+            catch(Exception e)
+            {
+            }
+        }
     }
 
 }

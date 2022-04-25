@@ -35,8 +35,21 @@
 
     public async void Submit()
     {
-        await Service.AddMinWageAsync(MinWage);
-        MinWage = new ();
+        try
+        {
+             await Service.AddMinWageAsync(MinWage);
+             MinWage = new ();
+        }
+        catch(Exception ex)
+        {
+            try
+            {
+             await MessageService.TostrAlert(MessageType.Error, ex.Message);
+            }
+            catch(Exception e)
+            {
+            }
+        }
     }
 
 }

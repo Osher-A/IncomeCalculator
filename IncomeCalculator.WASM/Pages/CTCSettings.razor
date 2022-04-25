@@ -42,8 +42,21 @@
     public ChildTaxCredit CTC { get; set; } = new ChildTaxCredit();
     public async void Submit()
     {
-        await TCService.AddCTCData(CTC);
-        CTC = new ChildTaxCredit();
+       try
+        {
+            await TCService.AddCTCData(CTC);
+             CTC = new ChildTaxCredit();
+        }
+        catch(Exception ex)
+        {
+            try
+            {
+             await MessageService.TostrAlert(MessageType.Error, ex.Message);
+            }
+            catch(Exception e)
+            {
+            }
+        }
     }
 
 }

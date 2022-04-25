@@ -23,8 +23,8 @@ namespace IncomeCalculator.WASM.Services
             var existing = (await  _tcApiService.GetWTCData()).Any(wtc => wtc.TaxYear.Year == dtoWTC.TaxYear.Year);
             if (!existing)
             {
-                await _tcApiService.AddWTC(dtoWTC);
-                await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
+                    await _tcApiService.AddWTC(dtoWTC);
+                    await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
             else
                 await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
@@ -35,8 +35,8 @@ namespace IncomeCalculator.WASM.Services
             var existing = (await _tcApiService.GetCTCData()).Any(ctc => ctc.TaxYear.Year == dtoCTC.TaxYear.Year);
             if (!existing)
             {
-               await _tcApiService.AddCTC(dtoCTC);
-               await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
+                    await _tcApiService.AddCTC(dtoCTC);
+                    await _messageService.TostrAlert(MessageType.Success, "Operation Successful!");
             }
             else
                await _messageService.SweetAlert("Information", "There already exists a record for the specified tax year and age!");
